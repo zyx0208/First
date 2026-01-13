@@ -21,6 +21,9 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
+	//옵션UI함수
+	void ToggleOption();
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -43,10 +46,10 @@ protected:
 	void Turn(float value);
 	void LookUp(float value);
 	
-	//옵션UI함수
-	void ToggleOption();
-
 	//옵션UI
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UI") TSubclassOf<UUserWidget> OptionUIClass;
 	UUserWidget* OptionUI;
+
+	//점프함수
+	void StartJump();
 };

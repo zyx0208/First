@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Blueprint/UserWidget.h"
+#include "Components/Button.h"
 #include "Option.generated.h"
 
 /**
@@ -13,5 +14,15 @@ UCLASS()
 class FIRST_API UOption : public UUserWidget
 {
 	GENERATED_BODY()
+
+protected:
+	void NativeConstruct();
+
+	//버튼 등록
+	UPROPERTY() UButton* CloseButton;
+	UPROPERTY() UButton* ExitButton;
 	
+	//버튼 상호작용 함수 등록
+	UFUNCTION() void CloseButtonClick();
+	UFUNCTION() void ExitButtonClick();
 };

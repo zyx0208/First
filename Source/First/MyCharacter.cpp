@@ -49,6 +49,9 @@ void AMyCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompone
 
 	//옵션
 	PlayerInputComponent->BindAction("Option", IE_Pressed, this, &AMyCharacter::ToggleOption).bExecuteWhenPaused = true;
+
+	//점프
+	PlayerInputComponent->BindAction("Jump", IE_Pressed, this, &AMyCharacter::Jump);
 }
 
 void AMyCharacter::MoveForward(float value)
@@ -116,9 +119,11 @@ void AMyCharacter::ToggleOption()
 	{
 		if (OptionUI->IsInViewport()) //이미 UI가 존재하는 경우
 		{
-			OptionUI->RemoveFromViewport();
-
+			UE_LOG(LogTemp, Log, TEXT("Option UI Close."));
 			//게임 진행 설정
+			OptionUI->RemoveFromViewport();
+			OptionUI = nullptr;
+
 			APlayerController* PController = Cast<APlayerController>(GetController());
 			if (PController)
 			{
@@ -129,9 +134,10 @@ void AMyCharacter::ToggleOption()
 		}
 		else //UI가 꺼져있는 경우
 		{
+			UE_LOG(LogTemp, Log, TEXT("Option UI Open."));
+			//UI 진행 설정
 			OptionUI->AddToViewport();
 
-			//UI 진행 설정
 			APlayerController* PController = Cast<APlayerController>(GetController());
 			if (PController)
 			{
@@ -141,4 +147,9 @@ void AMyCharacter::ToggleOption()
 			}
 		}
 	}
+}
+
+void AMyCharacter::StartJump()
+{
+	Jump();
 }
