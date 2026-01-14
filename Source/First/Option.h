@@ -19,10 +19,13 @@ protected:
 	void NativeConstruct();
 
 	//버튼 등록
-	UPROPERTY() UButton* CloseButton;
-	UPROPERTY() UButton* ExitButton;
+	UPROPERTY(meta = (BindWidget)) UButton* CloseButton;
+	UPROPERTY(meta = (BindWidget)) UButton* ExitButton;
 	
 	//버튼 상호작용 함수 등록
 	UFUNCTION() void CloseButtonClick();
 	UFUNCTION() void ExitButtonClick();
+
+	//애니메이션
+	UPROPERTY(meta = (BindWidgetAnim), Transient) UWidgetAnimation* OpenAnim;
 };

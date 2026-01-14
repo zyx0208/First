@@ -10,13 +10,15 @@ void UOption::NativeConstruct()
 {
 	Super::NativeConstruct();
 
-	//기능 위젯 할당
-	CloseButton = Cast<UButton>(GetWidgetFromName(TEXT("CloseOptionButton")));
-	ExitButton = Cast<UButton>(GetWidgetFromName(TEXT("ExitButton")));
-
-	//버튼 이벤트 할당
+	//이벤트 할당
 	CloseButton->OnClicked.AddDynamic(this, &UOption::CloseButtonClick);
 	ExitButton->OnClicked.AddDynamic(this, &UOption::ExitButtonClick);
+
+	//오픈 애니메이션
+	if (OpenAnim)
+	{
+		PlayAnimation(OpenAnim);
+	}
 }
 
 void UOption::CloseButtonClick()
