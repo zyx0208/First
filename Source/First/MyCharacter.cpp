@@ -21,6 +21,9 @@ void AMyCharacter::BeginPlay()
 	//초기 설정
 	MoveSpeed = GetCharacterMovement()->MaxWalkSpeed;
 	IsRun = false;
+	IsWalk = false;
+	IsUIMode = false;
+	ToggleCrosshair();
 }
 
 // Called every frame
@@ -28,6 +31,8 @@ void AMyCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+	//움직임 판단
+	IsWalk = !FMath::IsNearlyZero(GetInputAxisValue("MoveForward")) || !FMath::IsNearlyZero(GetInputAxisValue("MoveRight"));
 }
 
 // Called to bind functionality to input
@@ -82,11 +87,13 @@ void AMyCharacter::MoveRight(float value)
 
 void AMyCharacter::StartRun()
 {
+	IsRun = true;
 	GetCharacterMovement()->MaxWalkSpeed = MoveSpeed * 2.0f;
 }
 
 void AMyCharacter::StopRun()
 {
+	IsRun = false;
 	GetCharacterMovement()->MaxWalkSpeed = MoveSpeed;
 }
 
@@ -121,8 +128,10 @@ void AMyCharacter::ToggleOption()
 		{
 			UE_LOG(LogTemp, Log, TEXT("Option UI Close."));
 			//게임 진행 설정
-			OptionUI->RemoveFromViewport();
+			OptionUI->RemoveFromParent();
 			OptionUI = nullptr;
+
+			IsUIMode = false;
 
 			APlayerController* PController = Cast<APlayerController>(GetController());
 			if (PController)
@@ -138,6 +147,8 @@ void AMyCharacter::ToggleOption()
 			//UI 진행 설정
 			OptionUI->AddToViewport();
 
+			IsUIMode = true;
+
 			APlayerController* PController = Cast<APlayerController>(GetController());
 			if (PController)
 			{
@@ -152,4 +163,33 @@ void AMyCharacter::ToggleOption()
 void AMyCharacter::StartJump()
 {
 	Jump();
+}
+
+void AMyCharacter::ToggleCrosshair()
+{
+	if (!CrosshairUIClass)
+	{
+		UE_LOG(LogTemp, Log, TEXT("Crosshair UI is not existed."));
+		return;
+	}
+
+	if (!CrosshairUI)
+	{
+		CrosshairUI = CreateWidget<UUserWidget>(GetWorld(), CrosshairUIClass);
+	}
+
+	if (CrosshairUI)
+	{
+		if (CrosshairUI->IsInViewport()) //이미 크로스헤어가 존재하는 경우
+		{
+			UE_LOG(LogTemp, Log, TEXT("Off Crosshair."));
+			CrosshairUI->RemoveFromParent();
+			CrosshairUI = nullptr;
+		}
+		else //크로스헤어가 없는 경우
+		{
+			UE_LOG(LogTemp, Log, TEXT("On Crosshair."));
+			CrosshairUI->AddToViewport();
+		}
+	}
 }
