@@ -10,7 +10,6 @@ AMyCharacter::AMyCharacter()
 {
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
-
 }
 
 // Called when the game starts or when spawned
@@ -22,7 +21,9 @@ void AMyCharacter::BeginPlay()
 	MoveSpeed = GetCharacterMovement()->MaxWalkSpeed;
 	IsRun = false;
 	IsWalk = false;
-	IsUIMode = false;
+	IsOptionUIMode = false;
+	IsInventoryUIMode = false;
+	IsSkillUIMode = false;
 	ToggleCrosshair();
 }
 
@@ -54,6 +55,12 @@ void AMyCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompone
 
 	//옵션
 	PlayerInputComponent->BindAction("Option", IE_Pressed, this, &AMyCharacter::ToggleOption).bExecuteWhenPaused = true;
+
+	//인벤토리
+	PlayerInputComponent->BindAction("Inventory", IE_Pressed, this, &AMyCharacter::ToggleInventory);
+
+	//스킬창
+	PlayerInputComponent->BindAction("Skill", IE_Pressed, this, &AMyCharacter::ToggleSkill);
 
 	//점프
 	PlayerInputComponent->BindAction("Jump", IE_Pressed, this, &AMyCharacter::Jump);
@@ -99,12 +106,18 @@ void AMyCharacter::StopRun()
 
 void AMyCharacter::Turn(float value)
 {
-	AddControllerYawInput(value);
+	if (!(IsOptionUIMode || IsInventoryUIMode || IsSkillUIMode))
+	{
+		AddControllerYawInput(value);
+	}
 }
 
 void AMyCharacter::LookUp(float value)
 {
-	AddControllerPitchInput(value);
+	if (!(IsOptionUIMode || IsInventoryUIMode || IsSkillUIMode))
+	{
+		AddControllerPitchInput(value);
+	}
 }
 
 void AMyCharacter::ToggleOption()
@@ -113,6 +126,13 @@ void AMyCharacter::ToggleOption()
 	if (!OptionUIClass)
 	{
 		UE_LOG(LogTemp, Log, TEXT("Option UI is not existed."));
+		return;
+	}
+
+	//옵션 버튼을 연타하면 모든 UI가 제거되도록
+	if (CheckingUI())
+	{
+		ShutdownAllUI();
 		return;
 	}
 
@@ -131,7 +151,7 @@ void AMyCharacter::ToggleOption()
 			OptionUI->RemoveFromParent();
 			OptionUI = nullptr;
 
-			IsUIMode = false;
+			IsOptionUIMode = false;
 
 			APlayerController* PController = Cast<APlayerController>(GetController());
 			if (PController)
@@ -147,7 +167,7 @@ void AMyCharacter::ToggleOption()
 			//UI 진행 설정
 			OptionUI->AddToViewport();
 
-			IsUIMode = true;
+			IsOptionUIMode = true;
 
 			APlayerController* PController = Cast<APlayerController>(GetController());
 			if (PController)
@@ -158,6 +178,131 @@ void AMyCharacter::ToggleOption()
 			}
 		}
 	}
+}
+
+void AMyCharacter::ToggleInventory()
+{
+	//UI미지정
+	if (!InventoryUIClass)
+	{
+		UE_LOG(LogTemp, Log, TEXT("Inventory UI is not existed."));
+		return;
+	}
+
+	//최초 생성
+	if (!InventoryUI)
+	{
+		InventoryUI = CreateWidget<UUserWidget>(GetWorld(), InventoryUIClass);
+	}
+
+	if (InventoryUI)
+	{
+		if (InventoryUI->IsInViewport()) //이미 UI가 존재하는 경우
+		{
+			UE_LOG(LogTemp, Log, TEXT("Inventory UI Close."));
+			//게임 진행 설정
+			InventoryUI->RemoveFromParent();
+			InventoryUI = nullptr;
+
+			IsInventoryUIMode = false;
+
+			APlayerController* PController = Cast<APlayerController>(GetController());
+			if (PController)
+			{
+				PController->bShowMouseCursor = false;
+				PController->SetInputMode(FInputModeGameOnly());
+			}
+		}
+		else //UI가 꺼져있는 경우
+		{
+			//다른 UI 제거
+			if (CheckingUI())
+			{
+				ShutdownAllUI();
+			}
+
+			UE_LOG(LogTemp, Log, TEXT("Inventory UI Open."));
+			//UI 진행 설정
+			InventoryUI->AddToViewport();
+
+			IsInventoryUIMode = true;
+
+			APlayerController* PController = Cast<APlayerController>(GetController());
+			if (PController)
+			{
+				PController->bShowMouseCursor = true;
+				PController->SetInputMode(FInputModeGameAndUI());
+			}
+		}
+	}
+}
+
+void AMyCharacter::ToggleSkill()
+{
+	//UI미지정
+	if (!SkillUIClass)
+	{
+		UE_LOG(LogTemp, Log, TEXT("Skill UI is not existed."));
+		return;
+	}
+
+	//최초 생성
+	if (!SkillUI)
+	{
+		SkillUI = CreateWidget<UUserWidget>(GetWorld(), SkillUIClass);
+	}
+
+	if (SkillUI)
+	{
+		if (SkillUI->IsInViewport()) //이미 UI가 존재하는 경우
+		{
+			UE_LOG(LogTemp, Log, TEXT("Skill UI Close."));
+			//게임 진행 설정
+			SkillUI->RemoveFromParent();
+			SkillUI = nullptr;
+
+			IsSkillUIMode = false;
+
+			APlayerController* PController = Cast<APlayerController>(GetController());
+			if (PController)
+			{
+				PController->bShowMouseCursor = false;
+				PController->SetInputMode(FInputModeGameOnly());
+			}
+		}
+		else //UI가 꺼져있는 경우
+		{
+			//다른 UI 제거
+			if (CheckingUI())
+			{
+				ShutdownAllUI();
+			}
+
+			UE_LOG(LogTemp, Log, TEXT("Skill UI Open."));
+			//UI 진행 설정
+			SkillUI->AddToViewport();
+
+			IsSkillUIMode = true;
+
+			APlayerController* PController = Cast<APlayerController>(GetController());
+			if (PController)
+			{
+				PController->bShowMouseCursor = true;
+				PController->SetInputMode(FInputModeGameAndUI());
+			}
+		}
+	}
+}
+
+bool AMyCharacter::CheckingUI()
+{
+	return (IsInventoryUIMode || IsSkillUIMode);
+}
+
+void AMyCharacter::ShutdownAllUI()
+{
+	if (IsInventoryUIMode) ToggleInventory();
+	if (IsSkillUIMode) ToggleSkill();
 }
 
 void AMyCharacter::StartJump()
