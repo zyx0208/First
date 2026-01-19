@@ -28,6 +28,12 @@ void AMyCharacter::BeginPlay()
 	IsInventoryUIMode = false;
 	IsSkillUIMode = false;
 	ToggleCrosshair();
+
+	//임시 스킬 설정
+	SKillIdx[0] = 0;
+	SKillIdx[1] = 1;
+	SKillIdx[2] = 2;
+	SKillIdx[3] = 3;
 }
 
 // Called every frame
@@ -67,6 +73,12 @@ void AMyCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompone
 
 	//점프
 	PlayerInputComponent->BindAction("Jump", IE_Pressed, this, &AMyCharacter::Jump);
+
+	//스킬
+	PlayerInputComponent->BindAction("Skill_1", IE_Pressed, this, &AMyCharacter::UseSkill1);
+	PlayerInputComponent->BindAction("Skill_2", IE_Pressed, this, &AMyCharacter::UseSkill2);
+	PlayerInputComponent->BindAction("Skill_3", IE_Pressed, this, &AMyCharacter::UseSkill3);
+	PlayerInputComponent->BindAction("Skill_4", IE_Pressed, this, &AMyCharacter::UseSkill4);
 }
 
 void AMyCharacter::MoveForward(float value)
@@ -368,4 +380,24 @@ void AMyCharacter::WeaponDetach()
 	Weapon->DetachFromActor(FDetachmentTransformRules::KeepWorldTransform);
 	Weapon->Destroy();
 	Weapon = nullptr;
+}
+
+void AMyCharacter::UseSkill1()
+{
+	if(Weapon) Weapon->UseSkill(SKillIdx[0]);
+}
+
+void AMyCharacter::UseSkill2()
+{
+	if (Weapon) Weapon->UseSkill(SKillIdx[1]);
+}
+
+void AMyCharacter::UseSkill3()
+{
+	if (Weapon) Weapon->UseSkill(SKillIdx[2]);
+}
+
+void AMyCharacter::UseSkill4()
+{
+	if (Weapon) Weapon->UseSkill(SKillIdx[3]);
 }

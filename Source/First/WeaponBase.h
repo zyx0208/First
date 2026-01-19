@@ -4,7 +4,11 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
+#include "WeaponAttack.h"
 #include "WeaponBase.generated.h"
+
+//스킬를 델리게이트를 통해 관리
+DECLARE_DELEGATE(FSkillDelegate);
 
 UCLASS()
 class FIRST_API AWeaponBase : public AActor
@@ -13,6 +17,15 @@ class FIRST_API AWeaponBase : public AActor
 	
 public:	
 	AWeaponBase();
+
+	//모든 스킬들을 델리게이트에 저장
+	TArray<FSkillDelegate> AllSkills;
+	
+	//정수값(0~3)을 통해 스킬 실행 
+	virtual void UseSkill(int Slot);
+
+	//델리게이트 배열에 등록하는 함수
+	virtual void SetupSkills();
 
 	virtual void Tick(float DeltaTime) override;
 

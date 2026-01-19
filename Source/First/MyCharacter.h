@@ -39,6 +39,18 @@ public:
 	//무기 위치 세팅를 위한 컴포넌트
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly) USceneComponent* WeaponPosition;
 
+	//사용 스킬 인덱스 [0 : 1번스킬인덱스값] [1 : 2번스킬인덱스값] [2 : 3번스킬인덱스값] [3 : 4번스킬인덱스값]
+	int SKillIdx[4];
+
+	//1번 스킬 사용
+	void UseSkill1();
+	//2번 스킬 사용
+	void UseSkill2();
+	//3번 스킬 사용
+	void UseSkill3();
+	//4번 스킬 사용
+	void UseSkill4();
+
 protected:
 	virtual void BeginPlay() override;
 

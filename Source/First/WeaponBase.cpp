@@ -18,12 +18,31 @@ void AWeaponBase::BeginPlay()
 {
 	Super::BeginPlay();
 	
+    SetupSkills();
 }
 
 // Called every frame
 void AWeaponBase::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
 }
 
+void AWeaponBase::SetupSkills()
+{
+    //배열 초기화
+    AllSkills.Empty();
+
+    //공용 스킬이 생기면 추가할 예정
+}
+
+void AWeaponBase::UseSkill(int Slot)
+{
+    if (AllSkills.IsValidIndex(Slot))
+    {
+        AllSkills[Slot].ExecuteIfBound();
+    }
+    else
+    {
+        UE_LOG(LogTemp, Log, TEXT("%d Skill is not existed."), Slot);
+    }
+}

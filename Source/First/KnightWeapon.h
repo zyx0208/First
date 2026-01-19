@@ -14,4 +14,10 @@ class FIRST_API AKnightWeapon : public ALongswordBase
 {
 	GENERATED_BODY()
 	
+public:
+    virtual void SetupSkills() override;
+
+protected:
+    //무사 전용 스킬
+    void ShieldBash();
 };

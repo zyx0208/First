@@ -14,7 +14,12 @@ class FIRST_API ALongswordBase : public AWeaponBase
 {
 	GENERATED_BODY()
 
+public:
+	virtual void SetupSkills() override;
+
 protected:
 	ALongswordBase();
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Weapon") UStaticMeshComponent* WeaponMesh;
+	//장검 공용 스킬
+	void HorizontalSlash();
 };

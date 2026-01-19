@@ -3,3 +3,21 @@
 
 #include "KnightWeapon.h"
 
+void AKnightWeapon::SetupSkills()
+{
+    //배열 초기화
+    AllSkills.Empty();
+
+    //공용 스킬 먼저 등록
+    Super::SetupSkills();
+
+    //무사 전용 스킬 등록
+    AllSkills.Add(FSkillDelegate::CreateUObject(this, &AKnightWeapon::ShieldBash));
+}
+
+void AKnightWeapon::ShieldBash()
+{
+    UE_LOG(LogTemp, Log, TEXT("Knight ShieldBash executed!"));
+
+
+}
