@@ -10,6 +10,9 @@ AMyCharacter::AMyCharacter()
 {
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
+
+	WeaponPosition = CreateDefaultSubobject<USceneComponent>(TEXT("WeaponPosition"));
+	WeaponPosition->SetupAttachment(RootComponent);
 }
 
 // Called when the game starts or when spawned
@@ -337,4 +340,32 @@ void AMyCharacter::ToggleCrosshair()
 			CrosshairUI->AddToViewport();
 		}
 	}
+}
+
+void AMyCharacter::WeaponAttach(TSubclassOf<AWeaponBase> TargetWeapon)
+{
+	//무기가 입력되지 않으면 장착 취소
+	if (!TargetWeapon) return;
+
+	//무기가 이미 있으면 해제
+	if (Weapon)
+	{
+		WeaponDetach();
+	}
+
+	//무기 장착
+	UE_LOG(LogTemp, Log, TEXT("Weapon Attached."));
+	Weapon = GetWorld()->SpawnActor<AWeaponBase>(TargetWeapon);
+	Weapon->AttachToComponent(WeaponPosition, FAttachmentTransformRules::KeepRelativeTransform);
+}
+
+void AMyCharacter::WeaponDetach()
+{
+	//무기가 이미 없으면 그냥 종료
+	if (!Weapon) return;
+
+	UE_LOG(LogTemp, Log, TEXT("Weapon Detached."));
+	Weapon->DetachFromActor(FDetachmentTransformRules::KeepWorldTransform);
+	Weapon->Destroy();
+	Weapon = nullptr;
 }

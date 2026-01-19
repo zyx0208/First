@@ -4,7 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
-#include "Components/StaticMeshComponent.h"
+#include "WeaponBase.h"
 #include "MyCharacter.generated.h"
 
 UCLASS()
@@ -28,13 +28,19 @@ public:
 	//스킬UI함수
 	void ToggleSkill();
 
+	//무기 장착 함수
+	UFUNCTION(BlueprintCallable) void WeaponAttach(TSubclassOf<AWeaponBase> TargetWeapon);
+	//무기 해제 함수
+	UFUNCTION(BlueprintCallable) void WeaponDetach();
+	//무기를 장착하고 있는가?
+	bool IsAttachWeapon;
+	//무기 정보
+	UPROPERTY() AWeaponBase* Weapon;
+	//무기 위치 세팅를 위한 컴포넌트
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly) USceneComponent* WeaponPosition;
+
 protected:
 	virtual void BeginPlay() override;
-
-	//무기 설정
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly) UStaticMeshComponent* WeaponStaticMesh;
-	//무기 번호[0 : 맨손][1 : 장검][2 : 활][3 : 스태프][4 : 단검]
-	int WeaponNum;
 
 	//이동 설정
 	void MoveForward(float value);
