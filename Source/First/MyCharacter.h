@@ -5,7 +5,11 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
 #include "WeaponBase.h"
+#include "IngameUI.h"
 #include "MyCharacter.generated.h"
+
+//양쪽에서의 참조 때문에 전방 선언
+class UIngameUI;
 
 UCLASS()
 class FIRST_API AMyCharacter : public ACharacter
@@ -51,6 +55,30 @@ public:
 	//4번 스킬 사용
 	void UseSkill4();
 
+	//최대체력
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly) int MaxHP;
+	//현재체력
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly) int CurrentHP;
+	//공격력
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly) int AttackDamage;
+	//레벨
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly) int Level;
+	//최대 경험치량
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly) int MaxEXP;
+	//경험치량
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly) int EXP;
+	
+	//회복 함수
+	void HealHP();
+	//레벨업 함수
+	void LevelUp();
+	//피격 함수
+	void Attacked(int value);
+	//사망 함수
+	void Death();
+	//경험치 획득 함수
+	void AddEXP(int value);
+
 protected:
 	virtual void BeginPlay() override;
 
@@ -93,6 +121,10 @@ protected:
 	//UI모드를 확인하는 변수
 	bool IsSkillUIMode;
 
+	//인게임UI
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UI") TSubclassOf<UIngameUI> IngameUIClass;
+	UIngameUI* IngameUI;
+
 	//옵션 UI를 제외하고 UI가 켜져있는지 확인하는 함수
 	bool CheckingUI();
 
@@ -108,4 +140,10 @@ protected:
 
 	//크로스헤어UI 생성함수
 	void ToggleCrosshair();
+
+	//마우스모드
+	void ToggleMouseModeOn();
+
+	//마우스 위치 중앙 설정
+	void SetCenterMouse();
 };

@@ -4,6 +4,7 @@
 #include "MyCharacter.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Blueprint/UserWidget.h"
+#include "IngameUI.h"
 
 // Sets default values
 AMyCharacter::AMyCharacter()
@@ -34,6 +35,17 @@ void AMyCharacter::BeginPlay()
 	SKillIdx[1] = 1;
 	SKillIdx[2] = 2;
 	SKillIdx[3] = 3;
+
+	//인게임 UI 설정
+	if (IngameUIClass)
+	{
+		IngameUI = CreateWidget<UIngameUI>(GetWorld(), IngameUIClass);
+		IngameUI->AddToViewport();
+		IngameUI->SetPlayer(this);
+	}
+
+	//임시로 일단 등장할때 풀피로
+	HealHP();
 }
 
 // Called every frame
@@ -79,6 +91,9 @@ void AMyCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompone
 	PlayerInputComponent->BindAction("Skill_2", IE_Pressed, this, &AMyCharacter::UseSkill2);
 	PlayerInputComponent->BindAction("Skill_3", IE_Pressed, this, &AMyCharacter::UseSkill3);
 	PlayerInputComponent->BindAction("Skill_4", IE_Pressed, this, &AMyCharacter::UseSkill4);
+
+	//마우스모드
+	PlayerInputComponent->BindAction("MouseMode", IE_Pressed, this, &AMyCharacter::ToggleMouseModeOn);
 }
 
 void AMyCharacter::MoveForward(float value)
@@ -400,4 +415,70 @@ void AMyCharacter::UseSkill3()
 void AMyCharacter::UseSkill4()
 {
 	if (Weapon && !Weapon->IsAttacking) Weapon->UseSkill(SKillIdx[3]);
+}
+
+void AMyCharacter::HealHP()
+{
+	CurrentHP = MaxHP;
+}
+
+void AMyCharacter::AddEXP(int value)
+{
+	EXP += value;
+	//중복 레벨업을 위한 반복문
+	while (EXP >= MaxEXP)
+	{
+		EXP -= MaxEXP;
+		//만약 경험치 통 증가를 원하면 해당 위치에 작성
+		LevelUp();
+	}
+}
+
+void AMyCharacter::LevelUp()
+{
+	Level++;
+}
+
+void AMyCharacter::Attacked(int value)
+{
+	//방어력을 추가할 의향이 있으면 해당 위치에 계산식 추가
+	CurrentHP -= value;
+	if (CurrentHP <= 0)
+	{
+		Death();
+	}
+}
+
+void AMyCharacter::Death()
+{
+	UE_LOG(LogTemp, Log, TEXT("Player Death!"));
+}
+
+void AMyCharacter::ToggleMouseModeOn()
+{
+	APlayerController* PController = Cast<APlayerController>(GetController());
+	if (PController && !CheckingUI() && !IsOptionUIMode)
+	{
+		if (PController->bShowMouseCursor)
+		{
+			//마우스 모드 끄기
+			PController->bShowMouseCursor = false;
+			PController->SetInputMode(FInputModeGameOnly());
+		}
+		else
+		{
+			//마우스 모드 켜기
+			SetCenterMouse();
+			PController->bShowMouseCursor = true;
+			PController->SetInputMode(FInputModeGameAndUI());
+		}
+	}
+}
+
+void AMyCharacter::SetCenterMouse()
+{
+	APlayerController* PController = Cast<APlayerController>(GetController());
+	int32 X, Y;
+	PController->GetViewportSize(X, Y);
+	PController->SetMouseLocation(X / 2, Y / 2);
 }
