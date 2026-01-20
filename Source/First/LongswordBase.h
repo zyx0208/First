@@ -17,9 +17,18 @@ class FIRST_API ALongswordBase : public AWeaponBase
 public:
 	virtual void SetupSkills() override;
 
+	virtual void Tick(float DeltaTime) override;
+
 protected:
 	ALongswordBase();
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Weapon") UStaticMeshComponent* WeaponMesh;
+	
+	//무기 애니메이션
+	FTimeline SwingTimeline;
+	UPROPERTY(EditAnywhere, Category = "Timeline") UCurveFloat* SwingCurve;
+	UFUNCTION() void SwingTimelineUpdate(float value);
+	UFUNCTION() void SwingTimelineFinished();
+	
 	//장검 공용 스킬
 	void HorizontalSlash();
 };

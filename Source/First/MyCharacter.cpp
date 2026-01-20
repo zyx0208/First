@@ -384,20 +384,20 @@ void AMyCharacter::WeaponDetach()
 
 void AMyCharacter::UseSkill1()
 {
-	if(Weapon) Weapon->UseSkill(SKillIdx[0]);
+	if(Weapon && !Weapon->IsAttacking) Weapon->UseSkill(SKillIdx[0]);
 }
 
 void AMyCharacter::UseSkill2()
 {
-	if (Weapon) Weapon->UseSkill(SKillIdx[1]);
+	if (Weapon && !Weapon->IsAttacking) Weapon->UseSkill(SKillIdx[1]);
 }
 
 void AMyCharacter::UseSkill3()
 {
-	if (Weapon) Weapon->UseSkill(SKillIdx[2]);
+	if (Weapon && !Weapon->IsAttacking) Weapon->UseSkill(SKillIdx[2]);
 }
 
 void AMyCharacter::UseSkill4()
 {
-	if (Weapon) Weapon->UseSkill(SKillIdx[3]);
+	if (Weapon && !Weapon->IsAttacking) Weapon->UseSkill(SKillIdx[3]);
 }

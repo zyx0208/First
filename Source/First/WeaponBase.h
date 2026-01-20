@@ -5,6 +5,8 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 #include "WeaponAttack.h"
+#include "Components/TimelineComponent.h"
+#include "Curves/CurveFloat.h"
 #include "WeaponBase.generated.h"
 
 //스킬를 델리게이트를 통해 관리
@@ -28,6 +30,9 @@ public:
 	virtual void SetupSkills();
 
 	virtual void Tick(float DeltaTime) override;
+
+	//공격 중인가를 나타내는 변수
+	bool IsAttacking;
 
 protected:
 	virtual void BeginPlay() override;

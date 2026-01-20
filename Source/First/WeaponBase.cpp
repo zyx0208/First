@@ -17,7 +17,7 @@ AWeaponBase::AWeaponBase()
 void AWeaponBase::BeginPlay()
 {
 	Super::BeginPlay();
-	
+    IsAttacking = false;
     SetupSkills();
 }
 
