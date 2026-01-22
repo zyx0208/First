@@ -122,7 +122,8 @@ void AMyCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompone
 	PlayerInputComponent->BindAction("Skill_4", IE_Pressed, this, &AMyCharacter::UseSkill4);
 
 	//마우스모드
-	PlayerInputComponent->BindAction("MouseMode", IE_Pressed, this, &AMyCharacter::ToggleMouseModeOn);
+	PlayerInputComponent->BindAction("MouseMode", IE_Pressed, this, &AMyCharacter::MouseModeOn);
+	PlayerInputComponent->BindAction("MouseMode", IE_Released, this, &AMyCharacter::MouseModeOff);
 }
 
 void AMyCharacter::MoveForward(float value)
@@ -578,24 +579,26 @@ void AMyCharacter::Death()
 	UE_LOG(LogTemp, Log, TEXT("Player Death!"));
 }
 
-void AMyCharacter::ToggleMouseModeOn()
+void AMyCharacter::MouseModeOn()
 {
 	APlayerController* PController = Cast<APlayerController>(GetController());
 	if (PController && !CheckingUI() && !IsOptionUIMode)
 	{
-		if (PController->bShowMouseCursor)
-		{
-			//마우스 모드 끄기
-			PController->bShowMouseCursor = false;
-			PController->SetInputMode(FInputModeGameOnly());
-		}
-		else
-		{
-			//마우스 모드 켜기
-			SetCenterMouse();
-			PController->bShowMouseCursor = true;
-			PController->SetInputMode(FInputModeGameAndUI());
-		}
+		//마우스 모드 켜기
+		SetCenterMouse();
+		PController->bShowMouseCursor = true;
+		PController->SetInputMode(FInputModeGameAndUI());
+	}
+}
+
+void AMyCharacter::MouseModeOff()
+{
+	APlayerController* PController = Cast<APlayerController>(GetController());
+	if (PController && !CheckingUI() && !IsOptionUIMode)
+	{
+		//마우스 모드 끄기
+		PController->bShowMouseCursor = false;
+		PController->SetInputMode(FInputModeGameOnly());
 	}
 }
 
@@ -643,11 +646,12 @@ void AMyCharacter::ApplyStat()
 	//최대 경험치량 갱신
 	MaxEXPSeting();
 
-	//체력 UI 갱신
+	//UI 갱신
 	if (IngameUI)
 	{
 		IngameUI->ChangeHPBar();
 		IngameUI->ChangeEXPBar();
+		IngameUI->ChangeLevelBar();
 	}
 }
 
@@ -668,9 +672,8 @@ void AMyCharacter::MaxEXPSeting()
 
 void AMyCharacter::DefaultStatSeting()
 {
-	//레벨은 1부터 시작하므로, 원하는 시작값에 -1을 적용해서 계산
-	DefaultMaxHP = 9;
-	DefaultAttackDamage = 9;
-	DefaultCooldown = -1;
+	DefaultMaxHP = 10;
+	DefaultAttackDamage = 10;
+	DefaultCooldown = 0;
 }
 

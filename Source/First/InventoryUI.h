@@ -21,12 +21,15 @@ protected:
 	void NativeConstruct();
 	//플레이어 정보 불러오기
 	AMyCharacter* PC;
+
 	//위젯
 	UPROPERTY(meta = (BindWidget)) UButton* CloseButton;
 	UPROPERTY(meta = (BindWidget)) UTextBlock* HPText;
 	UPROPERTY(meta = (BindWidget)) UTextBlock* AttackDamageText;
 	UPROPERTY(meta = (BindWidget)) UTextBlock* CooldownText;
+
 	//UPROPERTY(meta = (BindWidget)) UTextBlock* LevelText;
 	//상호작용 함수
 	UFUNCTION() void CloseButtonClick();
+	UFUNCTION() void InventorySeting();
 };

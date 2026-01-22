@@ -27,6 +27,8 @@ public:
 	UFUNCTION(BlueprintCallable) void ChangeHPBar();
 	//경험치바 설정 함수
 	UFUNCTION(BlueprintCallable) void ChangeEXPBar();
+	//레벨바 설정 함수
+	UFUNCTION(BlueprintCallable) void ChangeLevelBar();
 
 	//스킬1 쿨타임 적용 UI
 	void Skill1CooltimeUI(float Current, float Max);
@@ -48,6 +50,7 @@ protected:
 	UPROPERTY(meta = (BindWidget)) UImage* EXPBarImage;
 	UPROPERTY(meta = (BindWidget)) UTextBlock* HPBarText;
 	UPROPERTY(meta = (BindWidget)) UTextBlock* EXPBarText;
+	UPROPERTY(meta = (BindWidget)) UTextBlock* LevelText;
 	UPROPERTY(meta = (BindWidget)) UProgressBar* Skill1Progress;
 	UPROPERTY(meta = (BindWidget)) UProgressBar* Skill2Progress;
 	UPROPERTY(meta = (BindWidget)) UProgressBar* Skill3Progress;

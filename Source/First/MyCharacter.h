@@ -181,7 +181,9 @@ protected:
 	void ToggleCrosshair();
 
 	//마우스모드
-	void ToggleMouseModeOn();
+	void MouseModeOn();
+	//마우스모드
+	void MouseModeOff();
 
 	//마우스 위치 중앙 설정
 	void SetCenterMouse();

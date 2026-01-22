@@ -26,6 +26,8 @@ void UInventoryUI::NativeConstruct()
 		FText CDT = FText::FromString(FString::Printf(TEXT("쿨타임감소 : %d%%"), PC->Cooldown));
 		CooldownText->SetText(CDT);
 	}
+
+	InventorySeting();
 }
 
 void UInventoryUI::CloseButtonClick()
@@ -38,3 +40,7 @@ void UInventoryUI::CloseButtonClick()
 	}
 }
 
+void UInventoryUI::InventorySeting()
+{
+	
+}

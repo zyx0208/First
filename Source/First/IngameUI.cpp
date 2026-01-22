@@ -36,6 +36,7 @@ void UIngameUI::NativeConstruct()
 	}
 	ChangeHPBar();
 	ChangeEXPBar();
+	ChangeLevelBar();
 }
 
 void UIngameUI::OptionButtonClick()
@@ -98,6 +99,16 @@ void UIngameUI::ChangeEXPBar()
 			FText ES = FText::FromString(FString::Printf(TEXT("Error.")));
 			EXPBarText->SetText(ES);
 		}
+	}
+}
+
+void UIngameUI::ChangeLevelBar()
+{
+	if (PC)
+	{
+		//레벨 수치 변경
+		FText LS = FText::FromString(FString::Printf(TEXT("LV. %d"), PC->Level));
+		LevelText->SetText(LS);
 	}
 }
 
