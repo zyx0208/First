@@ -8,9 +8,6 @@
 #include "IngameUI.h"
 #include "MyCharacter.generated.h"
 
-//양쪽에서의 참조 때문에 전방 선언
-class UIngameUI;
-
 UCLASS()
 class FIRST_API AMyCharacter : public ACharacter
 {
@@ -55,6 +52,27 @@ public:
 	//4번 스킬 사용
 	void UseSkill4();
 
+	//1번 스킬 쿨타임
+	FTimerHandle Skill1TimerHandle;
+	void Skill1TimerEnd();
+	bool IsSkill1Cooltime;
+	float Skill1Cooltime;
+	//2번 스킬 쿨타임
+	FTimerHandle Skill2TimerHandle;
+	void Skill2TimerEnd();
+	bool IsSkill2Cooltime;
+	float Skill2Cooltime;
+	//3번 스킬 쿨타임
+	FTimerHandle Skill3TimerHandle;
+	void Skill3TimerEnd();
+	bool IsSkill3Cooltime;
+	float Skill3Cooltime;
+	//4번 스킬 쿨타임
+	FTimerHandle Skill4TimerHandle;
+	void Skill4TimerEnd();
+	bool IsSkill4Cooltime;
+	float Skill4Cooltime;
+
 	//최대체력
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly) int MaxHP;
 	//현재체력
@@ -67,17 +85,38 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly) int MaxEXP;
 	//경험치량
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly) int EXP;
+	//쿨타임 감소 옵션
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly) int Cooldown;
 	
+	//디폴트 최대 체력(레벨에 따른 스탯)
+	int DefaultMaxHP;
+	//디폴트 공격력 옵션(레벨에 따른 스탯)
+	int DefaultAttackDamage;
+	//디폴트 쿨타임 옵션(레벨에 따른 스탯)
+	int DefaultCooldown;
+
 	//회복 함수
-	void HealHP();
+	UFUNCTION(BlueprintCallable) void HealHP(int value);
 	//레벨업 함수
-	void LevelUp();
+	UFUNCTION(BlueprintCallable) void LevelUp();
 	//피격 함수
-	void Attacked(int value);
+	UFUNCTION(BlueprintCallable) void Attacked(int value);
 	//사망 함수
 	void Death();
 	//경험치 획득 함수
-	void AddEXP(int value);
+	UFUNCTION(BlueprintCallable) void AddEXP(int value);
+	//현재 체력 퍼센트 반환함수
+	float HPPercent();
+	//현재 경험치 퍼센트 반환함수
+	float EXPPercent();
+	//최종 [체력, 공격력, 쿨타임]값
+	UFUNCTION(BlueprintCallable) void ApplyStat();
+	//최대 경험치량 설정
+	UFUNCTION(BlueprintCallable) void MaxEXPSeting();
+	//레벨 1로 초기화(테스트용 함수)
+	UFUNCTION(BlueprintCallable) void ResetLevel();
+
+
 
 protected:
 	virtual void BeginPlay() override;
@@ -146,4 +185,6 @@ protected:
 
 	//마우스 위치 중앙 설정
 	void SetCenterMouse();
+
+	void DefaultStatSeting();
 };

@@ -32,7 +32,7 @@ void ALongswordBase::SetupSkills()
     Super::SetupSkills();
 
     //장검 공용 스킬 등록
-    AllSkills.Add(FSkillDelegate::CreateUObject(this, &ALongswordBase::HorizontalSlash));
+    AllSkills.Add(FSkillDelegate::CreateUObject(this, &ALongswordBase::Smash));
 }
 
 void ALongswordBase::Tick(float DeltaTime)
@@ -57,7 +57,7 @@ void ALongswordBase::SwingTimelineFinished()
     UE_LOG(LogTemp, Log, TEXT("Timeline Finished"));
 }
 
-void ALongswordBase::HorizontalSlash()
+void ALongswordBase::Smash()
 {
     //공격 시작
     IsAttacking = true;

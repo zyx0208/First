@@ -29,6 +29,6 @@ protected:
 	UFUNCTION() void SwingTimelineUpdate(float value);
 	UFUNCTION() void SwingTimelineFinished();
 	
-	//장검 공용 스킬
-	void HorizontalSlash();
+	//장검 공용 스킬 1 : 내려찍기
+	void Smash();
 };
