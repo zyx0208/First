@@ -5,6 +5,7 @@
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Blueprint/UserWidget.h"
 #include "IngameUI.h"
+#include "InventoryUI.h"
 
 // Sets default values
 AMyCharacter::AMyCharacter()
@@ -12,8 +13,12 @@ AMyCharacter::AMyCharacter()
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
+	//무기 Transform 정보를 저장하는 씬 컴포넌트 생성 및 루트에 자식으로 배치
 	WeaponPosition = CreateDefaultSubobject<USceneComponent>(TEXT("WeaponPosition"));
 	WeaponPosition->SetupAttachment(RootComponent);
+
+	//인벤토리 컴포넌트 클래스 생성
+	CharacterInventory = CreateDefaultSubobject<UInventoryComponent>(TEXT("CharacterInventory"));
 }
 
 // Called when the game starts or when spawned
@@ -252,7 +257,7 @@ void AMyCharacter::ToggleInventory()
 	//최초 생성
 	if (!InventoryUI)
 	{
-		InventoryUI = CreateWidget<UUserWidget>(GetWorld(), InventoryUIClass);
+		InventoryUI = CreateWidget<UInventoryUI>(GetWorld(), InventoryUIClass);
 	}
 
 	if (InventoryUI)
@@ -283,6 +288,10 @@ void AMyCharacter::ToggleInventory()
 
 			UE_LOG(LogTemp, Log, TEXT("Inventory UI Open."));
 			//UI 진행 설정
+			if (CharacterInventory)
+			{
+				InventoryUI->InventoryCP = CharacterInventory;
+			}
 			InventoryUI->AddToViewport();
 
 			IsInventoryUIMode = true;

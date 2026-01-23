@@ -6,7 +6,10 @@
 #include "GameFramework/Character.h"
 #include "WeaponBase.h"
 #include "IngameUI.h"
+#include "InventoryComponent.h"
 #include "MyCharacter.generated.h"
+
+class UInventoryUI;
 
 UCLASS()
 class FIRST_API AMyCharacter : public ACharacter
@@ -39,6 +42,8 @@ public:
 	UPROPERTY() AWeaponBase* Weapon;
 	//무기 위치 세팅를 위한 컴포넌트
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly) USceneComponent* WeaponPosition;
+	//인벤토리 컴포넌트
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly) UInventoryComponent* CharacterInventory;
 
 	//사용 스킬 인덱스 [0 : 1번스킬인덱스값] [1 : 2번스킬인덱스값] [2 : 3번스킬인덱스값] [3 : 4번스킬인덱스값]
 	int SKillIdx[4];
@@ -149,8 +154,8 @@ protected:
 	bool IsOptionUIMode;
 
 	//인벤토리UI
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UI") TSubclassOf<UUserWidget> InventoryUIClass;
-	UUserWidget* InventoryUI;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UI") TSubclassOf<UInventoryUI> InventoryUIClass;
+	UInventoryUI* InventoryUI;
 	//UI모드를 확인하는 변수
 	bool IsInventoryUIMode;
 

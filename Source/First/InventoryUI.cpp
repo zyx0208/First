@@ -5,6 +5,8 @@
 #include "Kismet/KismetSystemLibrary.h"
 #include "Components/Button.h"
 #include "MyCharacter.h"
+#include "ItemStructure.h"
+#include "InventoryItemStructure.h"
 
 void UInventoryUI::NativeConstruct()
 {
@@ -42,5 +44,27 @@ void UInventoryUI::CloseButtonClick()
 
 void UInventoryUI::InventorySeting()
 {
-	
+	if (!ItemWrapBox || !InventoryCP) return;
+
+	ItemWrapBox->ClearChildren();
+	UE_LOG(LogTemp, Log, TEXT("ItemClear."));
+
+	for (FInventoryItemStructure& Item : InventoryCP->InventoryItems)
+	{
+		if (!ItemUIClass) continue;
+
+		UItemUI* NewSlot = CreateWidget<UItemUI>(GetWorld(), ItemUIClass);
+		if (NewSlot)
+		{
+			// DataTable에서 아이템 정보 조회
+			FItemStructure* ItemData = InventoryCP->GetItemData(Item.ItemID);
+			if (ItemData)
+			{
+				NewSlot->SetItemInfo(Item.ItemID, Item.Stack, ItemData->ItemIcon, ItemData->ItemName, ItemData->Description);
+			}
+
+			ItemWrapBox->AddChild(NewSlot);
+			UE_LOG(LogTemp, Log, TEXT("Item Add. : %d"), Item.ItemID);
+		}
+	}
 }

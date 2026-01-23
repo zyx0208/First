@@ -6,27 +6,33 @@
 #include "Blueprint/UserWidget.h"
 #include "Components/Button.h"
 #include "Components/TextBlock.h"
-#include "MyCharacter.h"
+#include "Components/WrapBox.h"
+#include "ItemUI.h"
 #include "InventoryUI.generated.h"
 
-/**
- * 
- */
+class AMyCharacter;
+
 UCLASS()
 class FIRST_API UInventoryUI : public UUserWidget
 {
 	GENERATED_BODY()
 	
+public:
+	//플레이어 정보 불러오기
+	UPROPERTY() UInventoryComponent* InventoryCP;
+	AMyCharacter* PC;
+
 protected:
 	void NativeConstruct();
-	//플레이어 정보 불러오기
-	AMyCharacter* PC;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadOnly) TSubclassOf<UItemUI> ItemUIClass;
 
 	//위젯
 	UPROPERTY(meta = (BindWidget)) UButton* CloseButton;
 	UPROPERTY(meta = (BindWidget)) UTextBlock* HPText;
 	UPROPERTY(meta = (BindWidget)) UTextBlock* AttackDamageText;
 	UPROPERTY(meta = (BindWidget)) UTextBlock* CooldownText;
+	UPROPERTY(meta = (BindWidget)) UWrapBox* ItemWrapBox;
 
 	//UPROPERTY(meta = (BindWidget)) UTextBlock* LevelText;
 	//상호작용 함수
