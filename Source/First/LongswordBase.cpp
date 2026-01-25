@@ -71,7 +71,7 @@ void ALongswordBase::Smash()
     Attack->SetActorRelativeLocation(FVector(0.0f, 0.0f, 50.0f));
     Attack->SetActorRelativeRotation(FRotator::ZeroRotator);
     //매개변수 주입
-    Attack->Damage = 30.f * AttackDamageRate;
+    Attack->Damage = 30.f;
     Attack->Radius = 20.f;
     Attack->LifeTime = 0.5f;
     //생성 완료

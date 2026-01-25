@@ -34,16 +34,18 @@ public:
 	//공격 중인가를 나타내는 변수
 	bool IsAttacking;
 
+	//체력 계수
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "WeaponStat")int WSHP;
+	//공격력 계수
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "WeaponStat")int WSAttackDamage;
+	//공격속도 및 쿨타임 계수
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "WeaponStat")int WSCooldown;
+
 protected:
 	virtual void BeginPlay() override;
 
 	//루트 컴포넌트
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Weapon")USceneComponent* Root;
-	//체력 계수
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "WeaponStat")float HPRate;
-	//공격력 계수
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "WeaponStat")float AttackDamageRate;
-	//공격속도 및 쿨타임 계수
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "WeaponStat")float AttackSpeedRate;
+
 
 };

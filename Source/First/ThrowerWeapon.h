@@ -14,4 +14,5 @@ class FIRST_API AThrowerWeapon : public AShortswordBase
 {
 	GENERATED_BODY()
 	
+	AThrowerWeapon();
 };

@@ -2,6 +2,7 @@
 
 
 #include "SkillUI.h"
+#include "MyCharacter.h"
 
 void USkillUI::NativeConstruct()
 {
@@ -9,6 +10,12 @@ void USkillUI::NativeConstruct()
 
 	//이벤트 할당
 	CloseButton->OnClicked.AddDynamic(this, &USkillUI::CloseButtonClick);
+
+	//오픈 애니메이션
+	if (OpenAnim)
+	{
+		PlayAnimation(OpenAnim);
+	}
 }
 
 void USkillUI::CloseButtonClick()

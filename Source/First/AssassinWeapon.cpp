@@ -3,3 +3,9 @@
 
 #include "AssassinWeapon.h"
 
+AAssassinWeapon::AAssassinWeapon()
+{
+	WSHP = 1;
+	WSAttackDamage = 2;
+	WSCooldown = 5;
+}

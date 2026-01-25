@@ -3,3 +3,9 @@
 
 #include "ShortbowWeapon.h"
 
+AShortbowWeapon::AShortbowWeapon()
+{
+	WSHP = 1;
+	WSAttackDamage = 2;
+	WSCooldown = 5;
+}

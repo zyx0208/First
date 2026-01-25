@@ -14,4 +14,5 @@ class FIRST_API AWhitemageWeapon : public AMageBase
 {
 	GENERATED_BODY()
 	
+	AWhitemageWeapon();
 };

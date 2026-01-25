@@ -13,5 +13,9 @@ UCLASS()
 class FIRST_API AGuardianWeapon : public ALongswordBase
 {
 	GENERATED_BODY()
-	
+
+	AGuardianWeapon();
+
+public:
+	virtual void SetupSkills() override;
 };

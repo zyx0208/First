@@ -38,4 +38,7 @@ public:
 	//상호작용 함수
 	UFUNCTION() void CloseButtonClick();
 	UFUNCTION() void InventorySeting();
+
+	//애니메이션
+	UPROPERTY(meta = (BindWidgetAnim), Transient) UWidgetAnimation* OpenAnim;
 };

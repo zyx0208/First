@@ -3,6 +3,13 @@
 
 #include "KnightWeapon.h"
 
+AKnightWeapon::AKnightWeapon()
+{
+    WSHP = 3;
+    WSAttackDamage = 3;
+    WSCooldown = 2;
+}
+
 void AKnightWeapon::SetupSkills()
 {
     //배열 초기화

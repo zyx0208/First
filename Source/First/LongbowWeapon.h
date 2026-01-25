@@ -14,4 +14,5 @@ class FIRST_API ALongbowWeapon : public ABowBase
 {
 	GENERATED_BODY()
 	
+	ALongbowWeapon();
 };

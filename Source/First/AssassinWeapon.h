@@ -14,4 +14,5 @@ class FIRST_API AAssassinWeapon : public AShortswordBase
 {
 	GENERATED_BODY()
 	
+	AAssassinWeapon();
 };

@@ -22,4 +22,7 @@ protected:
 
 	//상호작용 함수
 	UFUNCTION() void CloseButtonClick();
+
+	//애니메이션
+	UPROPERTY(meta = (BindWidgetAnim), Transient) UWidgetAnimation* OpenAnim;
 };

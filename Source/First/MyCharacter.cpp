@@ -426,6 +426,9 @@ void AMyCharacter::WeaponAttach(TSubclassOf<AWeaponBase> TargetWeapon)
 	UE_LOG(LogTemp, Log, TEXT("Weapon Attached."));
 	Weapon = GetWorld()->SpawnActor<AWeaponBase>(TargetWeapon);
 	Weapon->AttachToComponent(WeaponPosition, FAttachmentTransformRules::KeepRelativeTransform);
+
+	//스텟 적용
+	ApplyStat();
 }
 
 void AMyCharacter::WeaponDetach()
@@ -437,6 +440,9 @@ void AMyCharacter::WeaponDetach()
 	Weapon->DetachFromActor(FDetachmentTransformRules::KeepWorldTransform);
 	Weapon->Destroy();
 	Weapon = nullptr;
+
+	//스텟 적용
+	ApplyStat();
 }
 
 void AMyCharacter::UseSkill1()
@@ -636,15 +642,28 @@ float AMyCharacter::EXPPercent()
 
 void AMyCharacter::ApplyStat()
 {
+	//무기 스텟 적용
+	int WSHP = 0;
+	int WSAttackDamage = 0;
+	int WSCooldown = 0;
+	if (Weapon)
+	{
+		WSHP = Weapon->WSHP;
+		WSAttackDamage = Weapon->WSAttackDamage;
+		WSCooldown = Weapon->WSCooldown;
+	}
+
 	//체력, 공격력 설정(0~...)
-	MaxHP = DefaultMaxHP + Level;
-	AttackDamage = DefaultAttackDamage + Level;
+	MaxHP = DefaultMaxHP + Level + WSHP;
+	AttackDamage = DefaultAttackDamage + Level + WSAttackDamage;
 	
 	//쿨타임감소 설정(0~50)
-	int temp = DefaultCooldown + Level;
+	int temp = DefaultCooldown + Level + WSCooldown;
 	if (temp >= 50)
 	{
 		Cooldown = 50;
+		//오버 쿨타임은 공격력으로 전환
+		AttackDamage += temp - 50;
 	}
 	else if (temp <= 0)
 	{
@@ -655,6 +674,9 @@ void AMyCharacter::ApplyStat()
 		Cooldown = temp;
 	}
 	
+	//오버 체력 막기
+	if (CurrentHP > MaxHP) CurrentHP = MaxHP;
+
 	//최대 경험치량 갱신
 	MaxEXPSeting();
 

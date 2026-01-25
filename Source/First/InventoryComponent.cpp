@@ -60,27 +60,46 @@ bool UInventoryComponent::AddItem(int ItemID, int Count)
     UE_LOG(LogTemp, Log, TEXT("Add Item ItemID : %d"), ItemID);
 
     //이미 있는 아이템 찾기
+    int TempCount = Count;
     for (FInventoryItemStructure& InvItem : InventoryItems)
     {
+        if (TempCount <= 0) return true;
         if (InvItem.ItemID == ItemID)
         {
-            //스택 가능 아이템
-            if (ItemData->MaxStack > 1)
+            if (InvItem.Stack + TempCount > ItemData->MaxStack) //스택이 최대일 경우
             {
-                InvItem.Stack += Count;
+                TempCount -= ItemData->MaxStack - InvItem.Stack;
+                InvItem.Stack += ItemData->MaxStack - InvItem.Stack;
+                UE_LOG(LogTemp, Log, TEXT("Max Item Stack : %d"), InvItem.Stack);
+                continue;
+            }
+            else //스택이 최대가 아닐 경우
+            {
+                InvItem.Stack += TempCount;
                 UE_LOG(LogTemp, Log, TEXT("Now Item Stack : %d"), InvItem.Stack);
                 ApplyInventory();
                 return true;
             }
-            break;
         }
     }
 
     // 새 아이템 추가
-    FInventoryItemStructure NewItem(ItemID, Count);
-    InventoryItems.Add(NewItem);
+    while (TempCount > 0)
+    {
+        if (TempCount >= ItemData->MaxStack)
+        {
+            InventoryItems.Add(FInventoryItemStructure(ItemID, ItemData->MaxStack));
+            TempCount -= ItemData->MaxStack;
+            UE_LOG(LogTemp, Log, TEXT("Create Item, Now Item Stack : %d"), ItemData->MaxStack);
+        }
+        else
+        {
+            InventoryItems.Add(FInventoryItemStructure(ItemID, TempCount));
+            TempCount = 0;
+            UE_LOG(LogTemp, Log, TEXT("Create Item, Now Item Stack : %d"), TempCount);
+        }
+    }
     ApplyInventory();
-    UE_LOG(LogTemp, Log, TEXT("Create Item, Now Item Stack : %d"), Count);
     return true;
 }
 
@@ -155,7 +174,7 @@ bool UInventoryComponent::UseItem(int ItemID)
 
 void UInventoryComponent::ApplyInventory()
 {
-    if (PC)
+    if (PC && PC->InventoryUI)
     {
         if (PC->InventoryUI->IsInViewport())
         {

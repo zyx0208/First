@@ -32,9 +32,9 @@ public:
 	//스킬UI함수
 	void ToggleSkill();
 
-	//무기 장착 함수
+	//무기 장착 함수(전직)
 	UFUNCTION(BlueprintCallable) void WeaponAttach(TSubclassOf<AWeaponBase> TargetWeapon);
-	//무기 해제 함수
+	//무기 해제 함수(전직 해제)
 	UFUNCTION(BlueprintCallable) void WeaponDetach();
 	//무기를 장착하고 있는가?
 	bool IsAttachWeapon;

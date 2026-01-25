@@ -31,6 +31,12 @@ void UInventoryUI::NativeConstruct()
 	}
 
 	InventorySeting();
+
+	//오픈 애니메이션
+	if (OpenAnim)
+	{
+		PlayAnimation(OpenAnim);
+	}
 }
 
 void UInventoryUI::CloseButtonClick()
