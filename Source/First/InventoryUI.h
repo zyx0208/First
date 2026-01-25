@@ -11,6 +11,7 @@
 #include "InventoryUI.generated.h"
 
 class AMyCharacter;
+class UInventoryComponent;
 
 UCLASS()
 class FIRST_API UInventoryUI : public UUserWidget
@@ -19,10 +20,9 @@ class FIRST_API UInventoryUI : public UUserWidget
 	
 public:
 	//플레이어 정보 불러오기
-	UPROPERTY() UInventoryComponent* InventoryCP;
+	UInventoryComponent* InventoryCP;
 	AMyCharacter* PC;
 
-protected:
 	void NativeConstruct();
 	
 	UPROPERTY(EditAnywhere, BlueprintReadOnly) TSubclassOf<UItemUI> ItemUIClass;

@@ -8,6 +8,8 @@
 #include "ItemStructure.h"
 #include "InventoryComponent.generated.h"
 
+class UInventoryUI;
+class AMyCharacter;
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class FIRST_API UInventoryComponent : public UActorComponent
@@ -17,6 +19,8 @@ class FIRST_API UInventoryComponent : public UActorComponent
 public:	
 	// Sets default values for this component's properties
 	UInventoryComponent();
+
+	AMyCharacter* PC;
 
 protected:
 	// Called when the game starts
@@ -44,5 +48,6 @@ public:
 	//아이템 사용
 	UFUNCTION(BlueprintCallable)bool UseItem(int ItemID);
 
-
+	//실시간 인벤토리 반영이 필요할 경우
+	void ApplyInventory();
 };

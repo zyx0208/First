@@ -7,6 +7,7 @@
 #include "MyCharacter.h"
 #include "ItemStructure.h"
 #include "InventoryItemStructure.h"
+#include "InventoryComponent.h"
 
 void UInventoryUI::NativeConstruct()
 {
@@ -64,7 +65,7 @@ void UInventoryUI::InventorySeting()
 			}
 
 			ItemWrapBox->AddChild(NewSlot);
-			UE_LOG(LogTemp, Log, TEXT("Item Add. : %d"), Item.ItemID);
+			UE_LOG(LogTemp, Log, TEXT("ItemUI Add : %d"), Item.ItemID);
 		}
 	}
 }

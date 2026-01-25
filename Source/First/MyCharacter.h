@@ -6,10 +6,10 @@
 #include "GameFramework/Character.h"
 #include "WeaponBase.h"
 #include "IngameUI.h"
-#include "InventoryComponent.h"
 #include "MyCharacter.generated.h"
 
 class UInventoryUI;
+class UInventoryComponent;
 
 UCLASS()
 class FIRST_API AMyCharacter : public ACharacter
@@ -121,7 +121,27 @@ public:
 	//레벨 1로 초기화(테스트용 함수)
 	UFUNCTION(BlueprintCallable) void ResetLevel();
 
+	//옵션UI
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UI") TSubclassOf<UUserWidget> OptionUIClass;
+	UUserWidget* OptionUI;
+	//UI모드를 확인하는 변수
+	bool IsOptionUIMode;
 
+	//인벤토리UI
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UI") TSubclassOf<UInventoryUI> InventoryUIClass;
+	UInventoryUI* InventoryUI;
+	//UI모드를 확인하는 변수
+	bool IsInventoryUIMode;
+
+	//인벤토리UI
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UI") TSubclassOf<UUserWidget> SkillUIClass;
+	UUserWidget* SkillUI;
+	//UI모드를 확인하는 변수
+	bool IsSkillUIMode;
+
+	//인게임UI
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UI") TSubclassOf<UIngameUI> IngameUIClass;
+	UIngameUI* IngameUI;
 
 protected:
 	virtual void BeginPlay() override;
@@ -147,28 +167,6 @@ protected:
 	void Turn(float value);
 	void LookUp(float value);
 	
-	//옵션UI
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UI") TSubclassOf<UUserWidget> OptionUIClass;
-	UUserWidget* OptionUI;
-	//UI모드를 확인하는 변수
-	bool IsOptionUIMode;
-
-	//인벤토리UI
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UI") TSubclassOf<UInventoryUI> InventoryUIClass;
-	UInventoryUI* InventoryUI;
-	//UI모드를 확인하는 변수
-	bool IsInventoryUIMode;
-
-	//인벤토리UI
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UI") TSubclassOf<UUserWidget> SkillUIClass;
-	UUserWidget* SkillUI;
-	//UI모드를 확인하는 변수
-	bool IsSkillUIMode;
-
-	//인게임UI
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UI") TSubclassOf<UIngameUI> IngameUIClass;
-	UIngameUI* IngameUI;
-
 	//옵션 UI를 제외하고 UI가 켜져있는지 확인하는 함수
 	bool CheckingUI();
 

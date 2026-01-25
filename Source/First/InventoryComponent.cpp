@@ -2,6 +2,8 @@
 
 
 #include "InventoryComponent.h"
+#include "InventoryUI.h"
+#include "MyCharacter.h"
 
 // Sets default values for this component's properties
 UInventoryComponent::UInventoryComponent()
@@ -67,6 +69,7 @@ bool UInventoryComponent::AddItem(int ItemID, int Count)
             {
                 InvItem.Stack += Count;
                 UE_LOG(LogTemp, Log, TEXT("Now Item Stack : %d"), InvItem.Stack);
+                ApplyInventory();
                 return true;
             }
             break;
@@ -76,6 +79,7 @@ bool UInventoryComponent::AddItem(int ItemID, int Count)
     // 새 아이템 추가
     FInventoryItemStructure NewItem(ItemID, Count);
     InventoryItems.Add(NewItem);
+    ApplyInventory();
     UE_LOG(LogTemp, Log, TEXT("Create Item, Now Item Stack : %d"), Count);
     return true;
 }
@@ -92,10 +96,16 @@ bool UInventoryComponent::RemoveItem(int ItemID, int Count)
             {
                 InventoryItems[i].Stack -= Count;
             }
-            else //개수가 0이하면 제거
+            else if (InventoryItems[i].Stack == Count)
             {
                 InventoryItems.RemoveAt(i);
             }
+            else
+            {
+                UE_LOG(LogTemp, Log, TEXT("Remove Fail : [%d - %d < 0]"), InventoryItems[i].Stack, Count);
+                return false;
+            }
+            ApplyInventory();
             return true;
         }
     }
@@ -139,6 +149,18 @@ bool UInventoryComponent::UseItem(int ItemID)
 
     //임시용 사용 후 수량 감소
     RemoveItem(ItemID, 1);
-
+    ApplyInventory();
     return true;
+}
+
+void UInventoryComponent::ApplyInventory()
+{
+    if (PC)
+    {
+        if (PC->InventoryUI->IsInViewport())
+        {
+            PC->InventoryUI->InventorySeting();
+            UE_LOG(LogTemp, Log, TEXT("Fast InventorySeting."));
+        }
+    }
 }

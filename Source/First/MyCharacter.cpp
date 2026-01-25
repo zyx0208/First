@@ -6,6 +6,7 @@
 #include "Blueprint/UserWidget.h"
 #include "IngameUI.h"
 #include "InventoryUI.h"
+#include "InventoryComponent.h"
 
 // Sets default values
 AMyCharacter::AMyCharacter()
@@ -19,6 +20,7 @@ AMyCharacter::AMyCharacter()
 
 	//인벤토리 컴포넌트 클래스 생성
 	CharacterInventory = CreateDefaultSubobject<UInventoryComponent>(TEXT("CharacterInventory"));
+	CharacterInventory->PC = this;
 }
 
 // Called when the game starts or when spawned
@@ -258,6 +260,7 @@ void AMyCharacter::ToggleInventory()
 	if (!InventoryUI)
 	{
 		InventoryUI = CreateWidget<UInventoryUI>(GetWorld(), InventoryUIClass);
+		InventoryUI->InventoryCP = CharacterInventory;
 	}
 
 	if (InventoryUI)
