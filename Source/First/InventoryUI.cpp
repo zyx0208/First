@@ -67,7 +67,7 @@ void UInventoryUI::InventorySeting()
 			FItemStructure* ItemData = InventoryCP->GetItemData(Item.ItemID);
 			if (ItemData)
 			{
-				NewSlot->SetItemInfo(Item.ItemID, Item.Stack, ItemData->ItemIcon, ItemData->ItemName, ItemData->Description);
+				NewSlot->SetItemInfo(Item.ItemID, Item.Stack, ItemData->ItemIcon, ItemData->ItemName, ItemData->Description, ItemData->ItemType);
 			}
 
 			ItemWrapBox->AddChild(NewSlot);
