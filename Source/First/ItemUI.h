@@ -8,6 +8,7 @@
 #include "Components/Image.h"
 #include "TooltipUI.h"
 #include "ItemStructure.h"
+#include "ItemOptionUI.h"
 #include "ItemUI.generated.h"
 
 /**
@@ -25,6 +26,10 @@ public:
     //툴팁 클래스
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UI") TSubclassOf<UTooltipUI> TooltipClass;
     UTooltipUI* Tooltip;
+
+    //아이템 옵션 클래스
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UI") TSubclassOf<UItemOptionUI> ItemOptionUIClass;
+    UItemOptionUI* ItemOptionUI;
 
     //UI 제거 시 실행(툴팁 삭제를 위함)
     virtual void NativeDestruct() override;
@@ -48,9 +53,10 @@ protected:
     //아이템 타입
     UPROPERTY() EItemType ItemType;
    
-
     //툴팁 생성
     virtual void NativeOnMouseEnter(const FGeometry& InGeometry, const FPointerEvent& InMouseEvent) override;
     //툴팁 제거
     virtual void NativeOnMouseLeave(const FPointerEvent& InMouseEvent) override;
+    //아이템 옵션 생성
+    virtual FReply NativeOnMouseButtonDown(const FGeometry& InGeometry, const FPointerEvent& InMouseEvent) override;
 };

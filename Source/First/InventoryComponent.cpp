@@ -48,6 +48,23 @@ FItemStructure* UInventoryComponent::GetItemData(int ItemID)
 	return nullptr;
 }
 
+bool UInventoryComponent::CheckItem(int ItemID)
+{
+    FItemStructure* ItemData = GetItemData(ItemID);
+    if (!ItemData) return false;
+
+    for (FInventoryItemStructure& InvItem : InventoryItems)
+    {
+        if (InvItem.ItemID == ItemID)
+        {
+            return true;
+        }
+    }
+
+    return false;
+}
+
+
 bool UInventoryComponent::AddItem(int ItemID, int Count)
 {
     //개수가 0이하면 함수 취소
@@ -139,15 +156,18 @@ bool UInventoryComponent::UseItem(int ItemID)
         });
 
     if (!InvItem) return false;
+    if (InvItem->Stack <= 0) return false;
 
     const FItemStructure* ItemData = GetItemData(ItemID);
     if (!ItemData) return false;
+
+    UE_LOG(LogTemp, Log, TEXT("Use Item : %d"), ItemID);
 
     // 여기서 ItemType 별 처리
     switch (ItemData->ItemType)
     {
     case EItemType::Equipment:
-        //장비 아이템 사용 코드
+        //장비템 사용 코드
         break;
 
     case EItemType::SkillBook:
@@ -155,7 +175,8 @@ bool UInventoryComponent::UseItem(int ItemID)
         break;
 
     case EItemType::Consumable:
-        //사용 아이템 코드
+        UseConsumable(ItemID);
+        RemoveItem(ItemID, 1);
         break;
 
     case EItemType::NonConsumable:
@@ -166,8 +187,6 @@ bool UInventoryComponent::UseItem(int ItemID)
         break;
     }
 
-    //임시용 사용 후 수량 감소
-    RemoveItem(ItemID, 1);
     ApplyInventory();
     return true;
 }
@@ -181,5 +200,18 @@ void UInventoryComponent::ApplyInventory()
             PC->InventoryUI->InventorySeting();
             UE_LOG(LogTemp, Log, TEXT("Fast InventorySeting."));
         }
+    }
+}
+
+void UInventoryComponent::UseConsumable(int ItemID)
+{
+    switch (ItemID)
+    {
+    case 10000:
+        PC->HealHP(10);
+        break;
+    default:
+        UE_LOG(LogTemp, Log, TEXT("ItemID %d is not existed."), ItemID);
+        break;
     }
 }

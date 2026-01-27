@@ -68,10 +68,9 @@ void UInventoryUI::InventorySeting()
 			if (ItemData)
 			{
 				NewSlot->SetItemInfo(Item.ItemID, Item.Stack, ItemData->ItemIcon, ItemData->ItemName, ItemData->Description, ItemData->ItemType);
+				ItemWrapBox->AddChild(NewSlot);
+				UE_LOG(LogTemp, Log, TEXT("ItemUI Add : %d"), Item.ItemID);
 			}
-
-			ItemWrapBox->AddChild(NewSlot);
-			UE_LOG(LogTemp, Log, TEXT("ItemUI Add : %d"), Item.ItemID);
 		}
 	}
 }

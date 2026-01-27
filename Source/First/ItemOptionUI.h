@@ -16,6 +16,7 @@ class FIRST_API UItemOptionUI : public UUserWidget
 {
 	GENERATED_BODY()
 	
+	void NativeConstruct();
 	int ItemID;
 	int Count;
 
@@ -30,7 +31,7 @@ class FIRST_API UItemOptionUI : public UUserWidget
 
 public:
 	//아이템 정보 확인
-	UFUNCTION(BlueprintCallable) void CheckItemInfo(int ItemIDValue, int CountValue);
+	UFUNCTION(BlueprintCallable) void CheckItemInfo(int ItemIDValue, int CountValue, EItemType ItemTypeValue);
 	UFUNCTION() void UseButtonClick();
 	UFUNCTION() void Slot1ButtonClick();
 	UFUNCTION() void Slot2ButtonClick();
@@ -39,4 +40,7 @@ public:
 	UFUNCTION() void Slot5ButtonClick();
 	UFUNCTION() void ReleaseSlotButtonClick();
 	UFUNCTION() void RemoveButtonClick();
+
+	//UI 제거
+	virtual void NativeOnMouseLeave(const FPointerEvent& InMouseEvent) override;
 };

@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 
 #include "MyCharacter.h"
@@ -14,12 +14,12 @@ AMyCharacter::AMyCharacter()
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
-	//¹«±â Transform Á¤º¸¸¦ ÀúÀåÇÏ´Â ¾À ÄÄÆ÷³ÍÆ® »ı¼º ¹× ·çÆ®¿¡ ÀÚ½ÄÀ¸·Î ¹èÄ¡
+	//ë¬´ê¸° Transform ì •ë³´ë¥¼ ì €ì¥í•˜ëŠ” ì”¬ ì»´í¬ë„ŒíŠ¸ ìƒì„± ë° ë£¨íŠ¸ì— ìì‹ìœ¼ë¡œ ë°°ì¹˜
 	WeaponPosition = CreateDefaultSubobject<USceneComponent>(TEXT("WeaponPosition"));
 	WeaponPosition->SetupAttachment(RootComponent);
 
-	//ÀÎº¥Åä¸® ÄÄÆ÷³ÍÆ® Å¬·¡½º »ı¼º
-	CharacterInventory = CreateDefaultSubobject<UInventoryComponent>(TEXT("CharacterInventory"));
+	//ì¸ë²¤í† ë¦¬ ì»´í¬ë„ŒíŠ¸ í´ë˜ìŠ¤ ìƒì„±
+	CharacterInventory = CreateDefaultSubobject<UInventoryComponent>(TEXT("CInventory"));
 	CharacterInventory->PC = this;
 }
 
@@ -32,7 +32,7 @@ void AMyCharacter::BeginPlay()
 	ApplyStat();
 	HealHP(MaxHP);
 
-	//ÃÊ±â ¼³Á¤
+	//ì´ˆê¸° ì„¤ì •
 	MoveSpeed = GetCharacterMovement()->MaxWalkSpeed;
 	IsRun = false;
 	IsWalk = false;
@@ -43,26 +43,36 @@ void AMyCharacter::BeginPlay()
 	IsSkill2Cooltime = false;
 	IsSkill3Cooltime = false;
 	IsSkill4Cooltime = false;
+	IsSlot1Cooltime = false;
+	IsSlot2Cooltime = false;
+	IsSlot3Cooltime = false;
+	IsSlot4Cooltime = false;
+	IsSlot5Cooltime = false;
 	if (!EXP) EXP = 0;
 	ToggleCrosshair();
 
-	//ÀÓ½Ã ½ºÅ³ ¼³Á¤
+	//ì„ì‹œ ìŠ¤í‚¬ ì„¤ì •
 	SKillIdx[0] = 0;
 	SKillIdx[1] = 1;
 	SKillIdx[2] = 2;
 	SKillIdx[3] = 3;
 
-	//ÀÎ°ÔÀÓ UI ¼³Á¤
+	//ì¸ê²Œì„ UI ì„¤ì •
 	if (IngameUIClass)
 	{
 		IngameUI = CreateWidget<UIngameUI>(GetWorld(), IngameUIClass);
 		IngameUI->AddToViewport();
 
-		//½ºÅ³ ÄğÅ¸ÀÓ UI ÃÊ±âÈ­
+		//ì¿¨íƒ€ì„ UI ì´ˆê¸°í™”
 		IngameUI->Skill1CooltimeUI(0.0f, 1.0f);
 		IngameUI->Skill2CooltimeUI(0.0f, 10.0f);
 		IngameUI->Skill3CooltimeUI(0.0f, 10.0f);
 		IngameUI->Skill4CooltimeUI(0.0f, 10.0f);
+		IngameUI->Slot1CooltimeUI(0.0f, 10.0f);
+		IngameUI->Slot2CooltimeUI(0.0f, 10.0f);
+		IngameUI->Slot3CooltimeUI(0.0f, 10.0f);
+		IngameUI->Slot4CooltimeUI(0.0f, 10.0f);
+		IngameUI->Slot5CooltimeUI(0.0f, 10.0f);
 	}
 }
 
@@ -71,10 +81,10 @@ void AMyCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	//¿òÁ÷ÀÓ ÆÇ´Ü
+	//ì›€ì§ì„ íŒë‹¨
 	IsWalk = !FMath::IsNearlyZero(GetInputAxisValue("MoveForward")) || !FMath::IsNearlyZero(GetInputAxisValue("MoveRight"));
 
-	//½ºÅ³ ÄğÅ¸ÀÓ ÆÇ´Ü
+	//ìŠ¤í‚¬ ì¿¨íƒ€ì„ íŒë‹¨
 	if (IsSkill1Cooltime)
 	{
 		IngameUI->Skill1CooltimeUI(GetWorld()->GetTimerManager().GetTimerRemaining(Skill1TimerHandle), Skill1Cooltime);
@@ -91,6 +101,28 @@ void AMyCharacter::Tick(float DeltaTime)
 	{
 		IngameUI->Skill4CooltimeUI(GetWorld()->GetTimerManager().GetTimerRemaining(Skill4TimerHandle), Skill4Cooltime);
 	}
+
+	//ìŠ¬ë¡¯ ì¿¨íƒ€ì„ íŒë‹¨
+	if (IsSlot1Cooltime)
+	{
+		IngameUI->Slot1CooltimeUI(GetWorld()->GetTimerManager().GetTimerRemaining(Slot1TimerHandle), Slot1Cooltime);
+	}
+	if (IsSlot2Cooltime)
+	{
+		IngameUI->Slot2CooltimeUI(GetWorld()->GetTimerManager().GetTimerRemaining(Slot2TimerHandle), Slot2Cooltime);
+	}
+	if (IsSlot3Cooltime)
+	{
+		IngameUI->Slot3CooltimeUI(GetWorld()->GetTimerManager().GetTimerRemaining(Slot3TimerHandle), Slot3Cooltime);
+	}
+	if (IsSlot4Cooltime)
+	{
+		IngameUI->Slot4CooltimeUI(GetWorld()->GetTimerManager().GetTimerRemaining(Slot4TimerHandle), Slot4Cooltime);
+	}
+	if (IsSlot5Cooltime)
+	{
+		IngameUI->Slot5CooltimeUI(GetWorld()->GetTimerManager().GetTimerRemaining(Slot5TimerHandle), Slot5Cooltime);
+	}
 }
 
 // Called to bind functionality to input
@@ -98,48 +130,55 @@ void AMyCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompone
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
-	//ÀÌµ¿
+	//ì´ë™
 	PlayerInputComponent->BindAxis("MoveForward", this, &AMyCharacter::MoveForward);
 	PlayerInputComponent->BindAxis("MoveRight", this, &AMyCharacter::MoveRight);
 
-	//´Ş¸®±â
+	//ë‹¬ë¦¬ê¸°
 	PlayerInputComponent->BindAction("Run", IE_Pressed, this, &AMyCharacter::StartRun);
 	PlayerInputComponent->BindAction("Run", IE_Released, this, &AMyCharacter::StopRun);
 
-	//¸¶¿ì½º È¸Àü
+	//ë§ˆìš°ìŠ¤ íšŒì „
 	PlayerInputComponent->BindAxis("Turn", this, &AMyCharacter::Turn);
 	PlayerInputComponent->BindAxis("LookUp", this, &AMyCharacter::LookUp);
 
-	//¿É¼Ç
+	//ì˜µì…˜
 	PlayerInputComponent->BindAction("Option", IE_Pressed, this, &AMyCharacter::ToggleOption).bExecuteWhenPaused = true;
 
-	//ÀÎº¥Åä¸®
+	//ì¸ë²¤í† ë¦¬
 	PlayerInputComponent->BindAction("Inventory", IE_Pressed, this, &AMyCharacter::ToggleInventory);
 
-	//½ºÅ³Ã¢
+	//ìŠ¤í‚¬ì°½
 	PlayerInputComponent->BindAction("Skill", IE_Pressed, this, &AMyCharacter::ToggleSkill);
 
-	//Á¡ÇÁ
+	//ì í”„
 	PlayerInputComponent->BindAction("Jump", IE_Pressed, this, &AMyCharacter::Jump);
 
-	//½ºÅ³
+	//ìŠ¤í‚¬
 	PlayerInputComponent->BindAction("Skill_1", IE_Pressed, this, &AMyCharacter::UseSkill1);
 	PlayerInputComponent->BindAction("Skill_2", IE_Pressed, this, &AMyCharacter::UseSkill2);
 	PlayerInputComponent->BindAction("Skill_3", IE_Pressed, this, &AMyCharacter::UseSkill3);
 	PlayerInputComponent->BindAction("Skill_4", IE_Pressed, this, &AMyCharacter::UseSkill4);
 
-	//¸¶¿ì½º¸ğµå
+	//ë§ˆìš°ìŠ¤ëª¨ë“œ
 	PlayerInputComponent->BindAction("MouseMode", IE_Pressed, this, &AMyCharacter::MouseModeOn);
 	PlayerInputComponent->BindAction("MouseMode", IE_Released, this, &AMyCharacter::MouseModeOff);
+
+	//í€µìŠ¬ë¡¯
+	PlayerInputComponent->BindAction("Slot1", IE_Pressed, this, &AMyCharacter::UseSlot1);
+	PlayerInputComponent->BindAction("Slot2", IE_Pressed, this, &AMyCharacter::UseSlot2);
+	PlayerInputComponent->BindAction("Slot3", IE_Pressed, this, &AMyCharacter::UseSlot3);
+	PlayerInputComponent->BindAction("Slot4", IE_Pressed, this, &AMyCharacter::UseSlot4);
+	PlayerInputComponent->BindAction("Slot5", IE_Pressed, this, &AMyCharacter::UseSlot5);
 }
 
 void AMyCharacter::MoveForward(float value)
 {
 	if ((Controller) && (value != 0.0f))
 	{
-		//ÇöÀç ½ÃÁ¡ ºÒ·¯¿À±â
+		//í˜„ì¬ ì‹œì  ë¶ˆëŸ¬ì˜¤ê¸°
 		FRotator PlayerRotator(0, Controller->GetControlRotation().Yaw, 0);
-		//¹éÅÍ Á¤±ÔÈ­
+		//ë°±í„° ì •ê·œí™”
 		FVector Direction = FRotationMatrix(PlayerRotator).GetUnitAxis(EAxis::X);
 
 		AddMovementInput(Direction, value);
@@ -150,9 +189,9 @@ void AMyCharacter::MoveRight(float value)
 {
 	if ((Controller) && (value != 0.0f))
 	{
-		//ÇöÀç ½ÃÁ¡ ºÒ·¯¿À±â
+		//í˜„ì¬ ì‹œì  ë¶ˆëŸ¬ì˜¤ê¸°
 		FRotator PlayerRotator(0, Controller->GetControlRotation().Yaw, 0);
-		//¹éÅÍ Á¤±ÔÈ­
+		//ë°±í„° ì •ê·œí™”
 		FVector Direction = FRotationMatrix(PlayerRotator).GetUnitAxis(EAxis::Y);
 
 		AddMovementInput(Direction, value);
@@ -189,21 +228,21 @@ void AMyCharacter::LookUp(float value)
 
 void AMyCharacter::ToggleOption()
 {
-	//UI¹ÌÁöÁ¤
+	//UIë¯¸ì§€ì •
 	if (!OptionUIClass)
 	{
 		UE_LOG(LogTemp, Log, TEXT("Option UI is not existed."));
 		return;
 	}
 
-	//¿É¼Ç ¹öÆ°À» ¿¬Å¸ÇÏ¸é ¸ğµç UI°¡ Á¦°ÅµÇµµ·Ï
+	//ì˜µì…˜ ë²„íŠ¼ì„ ì—°íƒ€í•˜ë©´ ëª¨ë“  UIê°€ ì œê±°ë˜ë„ë¡
 	if (CheckingUI())
 	{
 		ShutdownAllUI();
 		return;
 	}
 
-	//ÃÖÃÊ »ı¼º
+	//ìµœì´ˆ ìƒì„±
 	if (!OptionUI)
 	{
 		OptionUI = CreateWidget<UUserWidget>(GetWorld(), OptionUIClass);
@@ -211,10 +250,10 @@ void AMyCharacter::ToggleOption()
 
 	if (OptionUI)
 	{
-		if (OptionUI->IsInViewport()) //ÀÌ¹Ì UI°¡ Á¸ÀçÇÏ´Â °æ¿ì
+		if (OptionUI->IsInViewport()) //ì´ë¯¸ UIê°€ ì¡´ì¬í•˜ëŠ” ê²½ìš°
 		{
 			UE_LOG(LogTemp, Log, TEXT("Option UI Close."));
-			//°ÔÀÓ ÁøÇà ¼³Á¤
+			//ê²Œì„ ì§„í–‰ ì„¤ì •
 			OptionUI->RemoveFromParent();
 			OptionUI = nullptr;
 
@@ -228,10 +267,10 @@ void AMyCharacter::ToggleOption()
 				PController->SetInputMode(FInputModeGameOnly());
 			}
 		}
-		else //UI°¡ ²¨Á®ÀÖ´Â °æ¿ì
+		else //UIê°€ êº¼ì ¸ìˆëŠ” ê²½ìš°
 		{
 			UE_LOG(LogTemp, Log, TEXT("Option UI Open."));
-			//UI ÁøÇà ¼³Á¤
+			//UI ì§„í–‰ ì„¤ì •
 			OptionUI->AddToViewport();
 
 			IsOptionUIMode = true;
@@ -249,14 +288,14 @@ void AMyCharacter::ToggleOption()
 
 void AMyCharacter::ToggleInventory()
 {
-	//UI¹ÌÁöÁ¤
+	//UIë¯¸ì§€ì •
 	if (!InventoryUIClass)
 	{
 		UE_LOG(LogTemp, Log, TEXT("Inventory UI is not existed."));
 		return;
 	}
 
-	//ÃÖÃÊ »ı¼º
+	//ìµœì´ˆ ìƒì„±
 	if (!InventoryUI)
 	{
 		InventoryUI = CreateWidget<UInventoryUI>(GetWorld(), InventoryUIClass);
@@ -265,10 +304,10 @@ void AMyCharacter::ToggleInventory()
 
 	if (InventoryUI)
 	{
-		if (InventoryUI->IsInViewport()) //ÀÌ¹Ì UI°¡ Á¸ÀçÇÏ´Â °æ¿ì
+		if (InventoryUI->IsInViewport()) //ì´ë¯¸ UIê°€ ì¡´ì¬í•˜ëŠ” ê²½ìš°
 		{
 			UE_LOG(LogTemp, Log, TEXT("Inventory UI Close."));
-			//°ÔÀÓ ÁøÇà ¼³Á¤
+			//ê²Œì„ ì§„í–‰ ì„¤ì •
 			InventoryUI->RemoveFromParent();
 			InventoryUI = nullptr;
 
@@ -281,16 +320,16 @@ void AMyCharacter::ToggleInventory()
 				PController->SetInputMode(FInputModeGameOnly());
 			}
 		}
-		else //UI°¡ ²¨Á®ÀÖ´Â °æ¿ì
+		else //UIê°€ êº¼ì ¸ìˆëŠ” ê²½ìš°
 		{
-			//´Ù¸¥ UI Á¦°Å
+			//ë‹¤ë¥¸ UI ì œê±°
 			if (CheckingUI())
 			{
 				ShutdownAllUI();
 			}
 
 			UE_LOG(LogTemp, Log, TEXT("Inventory UI Open."));
-			//UI ÁøÇà ¼³Á¤
+			//UI ì§„í–‰ ì„¤ì •
 			if (CharacterInventory)
 			{
 				InventoryUI->InventoryCP = CharacterInventory;
@@ -311,14 +350,14 @@ void AMyCharacter::ToggleInventory()
 
 void AMyCharacter::ToggleSkill()
 {
-	//UI¹ÌÁöÁ¤
+	//UIë¯¸ì§€ì •
 	if (!SkillUIClass)
 	{
 		UE_LOG(LogTemp, Log, TEXT("Skill UI is not existed."));
 		return;
 	}
 
-	//ÃÖÃÊ »ı¼º
+	//ìµœì´ˆ ìƒì„±
 	if (!SkillUI)
 	{
 		SkillUI = CreateWidget<UUserWidget>(GetWorld(), SkillUIClass);
@@ -326,10 +365,10 @@ void AMyCharacter::ToggleSkill()
 
 	if (SkillUI)
 	{
-		if (SkillUI->IsInViewport()) //ÀÌ¹Ì UI°¡ Á¸ÀçÇÏ´Â °æ¿ì
+		if (SkillUI->IsInViewport()) //ì´ë¯¸ UIê°€ ì¡´ì¬í•˜ëŠ” ê²½ìš°
 		{
 			UE_LOG(LogTemp, Log, TEXT("Skill UI Close."));
-			//°ÔÀÓ ÁøÇà ¼³Á¤
+			//ê²Œì„ ì§„í–‰ ì„¤ì •
 			SkillUI->RemoveFromParent();
 			SkillUI = nullptr;
 
@@ -342,16 +381,16 @@ void AMyCharacter::ToggleSkill()
 				PController->SetInputMode(FInputModeGameOnly());
 			}
 		}
-		else //UI°¡ ²¨Á®ÀÖ´Â °æ¿ì
+		else //UIê°€ êº¼ì ¸ìˆëŠ” ê²½ìš°
 		{
-			//´Ù¸¥ UI Á¦°Å
+			//ë‹¤ë¥¸ UI ì œê±°
 			if (CheckingUI())
 			{
 				ShutdownAllUI();
 			}
 
 			UE_LOG(LogTemp, Log, TEXT("Skill UI Open."));
-			//UI ÁøÇà ¼³Á¤
+			//UI ì§„í–‰ ì„¤ì •
 			SkillUI->AddToViewport();
 
 			IsSkillUIMode = true;
@@ -397,13 +436,13 @@ void AMyCharacter::ToggleCrosshair()
 
 	if (CrosshairUI)
 	{
-		if (CrosshairUI->IsInViewport()) //ÀÌ¹Ì Å©·Î½ºÇì¾î°¡ Á¸ÀçÇÏ´Â °æ¿ì
+		if (CrosshairUI->IsInViewport()) //ì´ë¯¸ í¬ë¡œìŠ¤í—¤ì–´ê°€ ì¡´ì¬í•˜ëŠ” ê²½ìš°
 		{
 			UE_LOG(LogTemp, Log, TEXT("Off Crosshair."));
 			CrosshairUI->RemoveFromParent();
 			CrosshairUI = nullptr;
 		}
-		else //Å©·Î½ºÇì¾î°¡ ¾ø´Â °æ¿ì
+		else //í¬ë¡œìŠ¤í—¤ì–´ê°€ ì—†ëŠ” ê²½ìš°
 		{
 			UE_LOG(LogTemp, Log, TEXT("On Crosshair."));
 			CrosshairUI->AddToViewport();
@@ -413,27 +452,27 @@ void AMyCharacter::ToggleCrosshair()
 
 void AMyCharacter::WeaponAttach(TSubclassOf<AWeaponBase> TargetWeapon)
 {
-	//¹«±â°¡ ÀÔ·ÂµÇÁö ¾ÊÀ¸¸é ÀåÂø Ãë¼Ò
+	//ë¬´ê¸°ê°€ ì…ë ¥ë˜ì§€ ì•Šìœ¼ë©´ ì¥ì°© ì·¨ì†Œ
 	if (!TargetWeapon) return;
 
-	//¹«±â°¡ ÀÌ¹Ì ÀÖÀ¸¸é ÇØÁ¦
+	//ë¬´ê¸°ê°€ ì´ë¯¸ ìˆìœ¼ë©´ í•´ì œ
 	if (Weapon)
 	{
 		WeaponDetach();
 	}
 
-	//¹«±â ÀåÂø
+	//ë¬´ê¸° ì¥ì°©
 	UE_LOG(LogTemp, Log, TEXT("Weapon Attached."));
 	Weapon = GetWorld()->SpawnActor<AWeaponBase>(TargetWeapon);
 	Weapon->AttachToComponent(WeaponPosition, FAttachmentTransformRules::KeepRelativeTransform);
 
-	//½ºÅİ Àû¿ë
+	//ìŠ¤í…Ÿ ì ìš©
 	ApplyStat();
 }
 
 void AMyCharacter::WeaponDetach()
 {
-	//¹«±â°¡ ÀÌ¹Ì ¾øÀ¸¸é ±×³É Á¾·á
+	//ë¬´ê¸°ê°€ ì´ë¯¸ ì—†ìœ¼ë©´ ê·¸ëƒ¥ ì¢…ë£Œ
 	if (!Weapon) return;
 
 	UE_LOG(LogTemp, Log, TEXT("Weapon Detached."));
@@ -441,7 +480,7 @@ void AMyCharacter::WeaponDetach()
 	Weapon->Destroy();
 	Weapon = nullptr;
 
-	//½ºÅİ Àû¿ë
+	//ìŠ¤í…Ÿ ì ìš©
 	ApplyStat();
 }
 
@@ -548,7 +587,7 @@ void AMyCharacter::AddEXP(int value)
 	{
 		IngameUI->ChangeEXPBar();
 	}
-	//Áßº¹ ·¹º§¾÷À» À§ÇÑ ¹İº¹¹®
+	//ì¤‘ë³µ ë ˆë²¨ì—…ì„ ìœ„í•œ ë°˜ë³µë¬¸
 	while (EXP >= MaxEXP)
 	{
 		EXP -= MaxEXP;
@@ -559,19 +598,19 @@ void AMyCharacter::AddEXP(int value)
 
 void AMyCharacter::LevelUp()
 {
-	//·¹º§ Áõ°¡
+	//ë ˆë²¨ ì¦ê°€
 	Level++;
 
-	//ÃÖÁ¾ ½ºÅİ °è»ê
+	//ìµœì¢… ìŠ¤í…Ÿ ê³„ì‚°
 	ApplyStat();
 
-	//Ç®ÇÇ·Î È¸º¹
+	//í’€í”¼ë¡œ íšŒë³µ
 	HealHP(MaxHP);
 }
 
 void AMyCharacter::Attacked(int value)
 {
-	//¹æ¾î·ÂÀ» Ãß°¡ÇÒ ÀÇÇâÀÌ ÀÖÀ¸¸é ÇØ´ç À§Ä¡¿¡ °è»ê½Ä Ãß°¡
+	//ë°©ì–´ë ¥ì„ ì¶”ê°€í•  ì˜í–¥ì´ ìˆìœ¼ë©´ í•´ë‹¹ ìœ„ì¹˜ì— ê³„ì‚°ì‹ ì¶”ê°€
 	if (value >= CurrentHP)
 	{
 		CurrentHP = 0;
@@ -581,7 +620,7 @@ void AMyCharacter::Attacked(int value)
 		CurrentHP -= value;
 	}
 	
-	//Ã¼·Â UI °»½Å
+	//ì²´ë ¥ UI ê°±ì‹ 
 	if (IngameUI)
 	{
 		IngameUI->ChangeHPBar();
@@ -602,7 +641,7 @@ void AMyCharacter::MouseModeOn()
 	APlayerController* PController = Cast<APlayerController>(GetController());
 	if (PController && !CheckingUI() && !IsOptionUIMode)
 	{
-		//¸¶¿ì½º ¸ğµå ÄÑ±â
+		//ë§ˆìš°ìŠ¤ ëª¨ë“œ ì¼œê¸°
 		SetCenterMouse();
 		PController->bShowMouseCursor = true;
 		PController->SetInputMode(FInputModeGameAndUI());
@@ -614,7 +653,7 @@ void AMyCharacter::MouseModeOff()
 	APlayerController* PController = Cast<APlayerController>(GetController());
 	if (PController && !CheckingUI() && !IsOptionUIMode)
 	{
-		//¸¶¿ì½º ¸ğµå ²ô±â
+		//ë§ˆìš°ìŠ¤ ëª¨ë“œ ë„ê¸°
 		PController->bShowMouseCursor = false;
 		PController->SetInputMode(FInputModeGameOnly());
 	}
@@ -642,7 +681,7 @@ float AMyCharacter::EXPPercent()
 
 void AMyCharacter::ApplyStat()
 {
-	//¹«±â ½ºÅİ Àû¿ë
+	//ë¬´ê¸° ìŠ¤í…Ÿ ì ìš©
 	int WSHP = 0;
 	int WSAttackDamage = 0;
 	int WSCooldown = 0;
@@ -653,16 +692,16 @@ void AMyCharacter::ApplyStat()
 		WSCooldown = Weapon->WSCooldown;
 	}
 
-	//Ã¼·Â, °ø°İ·Â ¼³Á¤(0~...)
+	//ì²´ë ¥, ê³µê²©ë ¥ ì„¤ì •(0~...)
 	MaxHP = DefaultMaxHP + Level + WSHP;
 	AttackDamage = DefaultAttackDamage + Level + WSAttackDamage;
 	
-	//ÄğÅ¸ÀÓ°¨¼Ò ¼³Á¤(0~50)
+	//ì¿¨íƒ€ì„ê°ì†Œ ì„¤ì •(0~50)
 	int temp = DefaultCooldown + Level + WSCooldown;
 	if (temp >= 50)
 	{
 		Cooldown = 50;
-		//¿À¹ö ÄğÅ¸ÀÓÀº °ø°İ·ÂÀ¸·Î ÀüÈ¯
+		//ì˜¤ë²„ ì¿¨íƒ€ì„ì€ ê³µê²©ë ¥ìœ¼ë¡œ ì „í™˜
 		AttackDamage += temp - 50;
 	}
 	else if (temp <= 0)
@@ -674,13 +713,13 @@ void AMyCharacter::ApplyStat()
 		Cooldown = temp;
 	}
 	
-	//¿À¹ö Ã¼·Â ¸·±â
+	//ì˜¤ë²„ ì²´ë ¥ ë§‰ê¸°
 	if (CurrentHP > MaxHP) CurrentHP = MaxHP;
 
-	//ÃÖ´ë °æÇèÄ¡·® °»½Å
+	//ìµœëŒ€ ê²½í—˜ì¹˜ëŸ‰ ê°±ì‹ 
 	MaxEXPSeting();
 
-	//UI °»½Å
+	//UI ê°±ì‹ 
 	if (IngameUI)
 	{
 		IngameUI->ChangeHPBar();
@@ -700,7 +739,7 @@ void AMyCharacter::ResetLevel()
 
 void AMyCharacter::MaxEXPSeting()
 {
-	//´ÙÀ½ ·¹º§±îÁö ÇÊ¿äÇÑ °æÇèÄ¡·® °ø½Ä
+	//ë‹¤ìŒ ë ˆë²¨ê¹Œì§€ í•„ìš”í•œ ê²½í—˜ì¹˜ëŸ‰ ê³µì‹
 	MaxEXP = Level + 9;
 }
 
@@ -711,3 +750,122 @@ void AMyCharacter::DefaultStatSeting()
 	DefaultCooldown = 0;
 }
 
+void AMyCharacter::UseSlot1()
+{
+	if (Slot[0] && !IsSlot1Cooltime)
+	{
+		IsSlot1Cooltime = true;
+		CharacterInventory->UseItem(Slot[0]);
+		Slot1Cooltime = 10.0f;
+		GetWorld()->GetTimerManager().SetTimer(Slot1TimerHandle, this, &AMyCharacter::Slot1TimerEnd, Slot1Cooltime, false);
+	}
+	if (!CharacterInventory->CheckItem(Slot[0]))
+	{
+		Slot[0] = 0;
+		if (IngameUI)
+		{
+			IngameUI->ChangeSlotBar();
+		}
+	}
+}
+
+void AMyCharacter::UseSlot2()
+{
+	if (Slot[1] && !IsSlot2Cooltime)
+	{
+		IsSlot2Cooltime = true;
+		CharacterInventory->UseItem(Slot[1]);
+		Slot2Cooltime = 10.0f;
+		GetWorld()->GetTimerManager().SetTimer(Slot2TimerHandle, this, &AMyCharacter::Slot2TimerEnd, Slot2Cooltime, false);
+	}
+	if (!CharacterInventory->CheckItem(Slot[1]))
+	{
+		Slot[1] = 0;
+		if (IngameUI)
+		{
+			IngameUI->ChangeSlotBar();
+		}
+	}
+}
+
+void AMyCharacter::UseSlot3()
+{
+	if (Slot[2] && !IsSlot3Cooltime)
+	{
+		IsSlot3Cooltime = true;
+		CharacterInventory->UseItem(Slot[2]);
+		Slot3Cooltime = 10.0f;
+		GetWorld()->GetTimerManager().SetTimer(Slot3TimerHandle, this, &AMyCharacter::Slot3TimerEnd, Slot3Cooltime, false);
+	}
+	if (!CharacterInventory->CheckItem(Slot[2]))
+	{
+		Slot[2] = 0;
+		if (IngameUI)
+		{
+			IngameUI->ChangeSlotBar();
+		}
+	}
+}
+
+void AMyCharacter::UseSlot4()
+{
+	if (Slot[3] && !IsSlot4Cooltime)
+	{
+		IsSlot4Cooltime = true;
+		CharacterInventory->UseItem(Slot[3]);
+		Slot4Cooltime = 10.0f;
+		GetWorld()->GetTimerManager().SetTimer(Slot4TimerHandle, this, &AMyCharacter::Slot4TimerEnd, Slot4Cooltime, false);
+	}
+	if (!CharacterInventory->CheckItem(Slot[3]))
+	{
+		Slot[3] = 0;
+		if (IngameUI)
+		{
+			IngameUI->ChangeSlotBar();
+		}
+	}
+}
+
+void AMyCharacter::UseSlot5()
+{
+	if (Slot[4] && !IsSlot5Cooltime)
+	{
+		IsSlot5Cooltime = true;
+		CharacterInventory->UseItem(Slot[4]);
+		Slot5Cooltime = 10.0f;
+		GetWorld()->GetTimerManager().SetTimer(Slot5TimerHandle, this, &AMyCharacter::Slot5TimerEnd, Slot5Cooltime, false);
+	}
+	if (!CharacterInventory->CheckItem(Slot[4]))
+	{
+		Slot[4] = 0;
+		if (IngameUI)
+		{
+			IngameUI->ChangeSlotBar();
+		}
+	}
+}
+
+void AMyCharacter::Slot1TimerEnd()
+{
+	IsSlot1Cooltime = false;
+}
+
+void AMyCharacter::Slot2TimerEnd()
+{
+	IsSlot2Cooltime = false;
+}
+
+void AMyCharacter::Slot3TimerEnd()
+{
+	IsSlot3Cooltime = false;
+}
+
+void AMyCharacter::Slot4TimerEnd()
+{
+	IsSlot4Cooltime = false;
+}
+
+void AMyCharacter::Slot5TimerEnd()
+{
+	IsSlot5Cooltime = false;
+}

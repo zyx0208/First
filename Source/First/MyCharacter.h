@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 #pragma once
 
@@ -23,173 +23,215 @@ public:
 
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
-	//¿É¼ÇUIÇÔ¼ö
+	//ì˜µì…˜UIí•¨ìˆ˜
 	void ToggleOption();
 
-	//ÀÎº¥Åä¸®UIÇÔ¼ö
+	//ì¸ë²¤í† ë¦¬UIí•¨ìˆ˜
 	void ToggleInventory();
 
-	//½ºÅ³UIÇÔ¼ö
+	//ìŠ¤í‚¬UIí•¨ìˆ˜
 	void ToggleSkill();
 
-	//¹«±â ÀåÂø ÇÔ¼ö(ÀüÁ÷)
+	//ë¬´ê¸° ì¥ì°© í•¨ìˆ˜(ì „ì§)
 	UFUNCTION(BlueprintCallable) void WeaponAttach(TSubclassOf<AWeaponBase> TargetWeapon);
-	//¹«±â ÇØÁ¦ ÇÔ¼ö(ÀüÁ÷ ÇØÁ¦)
+	//ë¬´ê¸° í•´ì œ í•¨ìˆ˜(ì „ì§ í•´ì œ)
 	UFUNCTION(BlueprintCallable) void WeaponDetach();
-	//¹«±â¸¦ ÀåÂøÇÏ°í ÀÖ´Â°¡?
+	//ë¬´ê¸°ë¥¼ ì¥ì°©í•˜ê³  ìˆëŠ”ê°€?
 	bool IsAttachWeapon;
-	//¹«±â Á¤º¸
+	//ë¬´ê¸° ì •ë³´
 	UPROPERTY() AWeaponBase* Weapon;
-	//¹«±â À§Ä¡ ¼¼ÆÃ¸¦ À§ÇÑ ÄÄÆ÷³ÍÆ®
+	//ë¬´ê¸° ìœ„ì¹˜ ì„¸íŒ…ë¥¼ ìœ„í•œ ì»´í¬ë„ŒíŠ¸
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly) USceneComponent* WeaponPosition;
-	//ÀÎº¥Åä¸® ÄÄÆ÷³ÍÆ®
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly) UInventoryComponent* CharacterInventory;
+	//ì¸ë²¤í† ë¦¬ ì»´í¬ë„ŒíŠ¸
+	UPROPERTY(EditAnywhere, BlueprintReadWrite) UInventoryComponent* CharacterInventory;
 
-	//»ç¿ë ½ºÅ³ ÀÎµ¦½º [0 : 1¹ø½ºÅ³ÀÎµ¦½º°ª] [1 : 2¹ø½ºÅ³ÀÎµ¦½º°ª] [2 : 3¹ø½ºÅ³ÀÎµ¦½º°ª] [3 : 4¹ø½ºÅ³ÀÎµ¦½º°ª]
+	//ì‚¬ìš© ìŠ¤í‚¬ ì¸ë±ìŠ¤ [0 : 1ë²ˆìŠ¤í‚¬ì¸ë±ìŠ¤ê°’] [1 : 2ë²ˆìŠ¤í‚¬ì¸ë±ìŠ¤ê°’] [2 : 3ë²ˆìŠ¤í‚¬ì¸ë±ìŠ¤ê°’] [3 : 4ë²ˆìŠ¤í‚¬ì¸ë±ìŠ¤ê°’]
 	int SKillIdx[4];
 
-	//1¹ø ½ºÅ³ »ç¿ë
+	//1ë²ˆ ìŠ¤í‚¬ ì‚¬ìš©
 	void UseSkill1();
-	//2¹ø ½ºÅ³ »ç¿ë
+	//2ë²ˆ ìŠ¤í‚¬ ì‚¬ìš©
 	void UseSkill2();
-	//3¹ø ½ºÅ³ »ç¿ë
+	//3ë²ˆ ìŠ¤í‚¬ ì‚¬ìš©
 	void UseSkill3();
-	//4¹ø ½ºÅ³ »ç¿ë
+	//4ë²ˆ ìŠ¤í‚¬ ì‚¬ìš©
 	void UseSkill4();
 
-	//1¹ø ½ºÅ³ ÄğÅ¸ÀÓ
+	//1ë²ˆ ìŠ¤í‚¬ ì¿¨íƒ€ì„
 	FTimerHandle Skill1TimerHandle;
 	void Skill1TimerEnd();
 	bool IsSkill1Cooltime;
 	float Skill1Cooltime;
-	//2¹ø ½ºÅ³ ÄğÅ¸ÀÓ
+	//2ë²ˆ ìŠ¤í‚¬ ì¿¨íƒ€ì„
 	FTimerHandle Skill2TimerHandle;
 	void Skill2TimerEnd();
 	bool IsSkill2Cooltime;
 	float Skill2Cooltime;
-	//3¹ø ½ºÅ³ ÄğÅ¸ÀÓ
+	//3ë²ˆ ìŠ¤í‚¬ ì¿¨íƒ€ì„
 	FTimerHandle Skill3TimerHandle;
 	void Skill3TimerEnd();
 	bool IsSkill3Cooltime;
 	float Skill3Cooltime;
-	//4¹ø ½ºÅ³ ÄğÅ¸ÀÓ
+	//4ë²ˆ ìŠ¤í‚¬ ì¿¨íƒ€ì„
 	FTimerHandle Skill4TimerHandle;
 	void Skill4TimerEnd();
 	bool IsSkill4Cooltime;
 	float Skill4Cooltime;
 
-	//ÃÖ´ëÃ¼·Â
+	//ìµœëŒ€ì²´ë ¥
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly) int MaxHP;
-	//ÇöÀçÃ¼·Â
+	//í˜„ì¬ì²´ë ¥
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly) int CurrentHP;
-	//°ø°İ·Â
+	//ê³µê²©ë ¥
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly) int AttackDamage;
-	//·¹º§
+	//ë ˆë²¨
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly) int Level;
-	//ÃÖ´ë °æÇèÄ¡·®
+	//ìµœëŒ€ ê²½í—˜ì¹˜ëŸ‰
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly) int MaxEXP;
-	//°æÇèÄ¡·®
+	//ê²½í—˜ì¹˜ëŸ‰
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly) int EXP;
-	//ÄğÅ¸ÀÓ °¨¼Ò ¿É¼Ç
+	//ì¿¨íƒ€ì„ ê°ì†Œ ì˜µì…˜
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly) int Cooldown;
 	
-	//µğÆúÆ® ÃÖ´ë Ã¼·Â(·¹º§¿¡ µû¸¥ ½ºÅÈ)
+	//ë””í´íŠ¸ ìµœëŒ€ ì²´ë ¥(ë ˆë²¨ì— ë”°ë¥¸ ìŠ¤íƒ¯)
 	int DefaultMaxHP;
-	//µğÆúÆ® °ø°İ·Â ¿É¼Ç(·¹º§¿¡ µû¸¥ ½ºÅÈ)
+	//ë””í´íŠ¸ ê³µê²©ë ¥ ì˜µì…˜(ë ˆë²¨ì— ë”°ë¥¸ ìŠ¤íƒ¯)
 	int DefaultAttackDamage;
-	//µğÆúÆ® ÄğÅ¸ÀÓ ¿É¼Ç(·¹º§¿¡ µû¸¥ ½ºÅÈ)
+	//ë””í´íŠ¸ ì¿¨íƒ€ì„ ì˜µì…˜(ë ˆë²¨ì— ë”°ë¥¸ ìŠ¤íƒ¯)
 	int DefaultCooldown;
 
-	//È¸º¹ ÇÔ¼ö
+	//íšŒë³µ í•¨ìˆ˜
 	UFUNCTION(BlueprintCallable) void HealHP(int value);
-	//·¹º§¾÷ ÇÔ¼ö
+	//ë ˆë²¨ì—… í•¨ìˆ˜
 	UFUNCTION(BlueprintCallable) void LevelUp();
-	//ÇÇ°İ ÇÔ¼ö
+	//í”¼ê²© í•¨ìˆ˜
 	UFUNCTION(BlueprintCallable) void Attacked(int value);
-	//»ç¸Á ÇÔ¼ö
+	//ì‚¬ë§ í•¨ìˆ˜
 	void Death();
-	//°æÇèÄ¡ È¹µæ ÇÔ¼ö
+	//ê²½í—˜ì¹˜ íšë“ í•¨ìˆ˜
 	UFUNCTION(BlueprintCallable) void AddEXP(int value);
-	//ÇöÀç Ã¼·Â ÆÛ¼¾Æ® ¹İÈ¯ÇÔ¼ö
+	//í˜„ì¬ ì²´ë ¥ í¼ì„¼íŠ¸ ë°˜í™˜í•¨ìˆ˜
 	float HPPercent();
-	//ÇöÀç °æÇèÄ¡ ÆÛ¼¾Æ® ¹İÈ¯ÇÔ¼ö
+	//í˜„ì¬ ê²½í—˜ì¹˜ í¼ì„¼íŠ¸ ë°˜í™˜í•¨ìˆ˜
 	float EXPPercent();
-	//ÃÖÁ¾ [Ã¼·Â, °ø°İ·Â, ÄğÅ¸ÀÓ]°ª
+	//ìµœì¢… [ì²´ë ¥, ê³µê²©ë ¥, ì¿¨íƒ€ì„]ê°’
 	UFUNCTION(BlueprintCallable) void ApplyStat();
-	//ÃÖ´ë °æÇèÄ¡·® ¼³Á¤
+	//ìµœëŒ€ ê²½í—˜ì¹˜ëŸ‰ ì„¤ì •
 	UFUNCTION(BlueprintCallable) void MaxEXPSeting();
-	//·¹º§ 1·Î ÃÊ±âÈ­(Å×½ºÆ®¿ë ÇÔ¼ö)
+	//ë ˆë²¨ 1ë¡œ ì´ˆê¸°í™”(í…ŒìŠ¤íŠ¸ìš© í•¨ìˆ˜)
 	UFUNCTION(BlueprintCallable) void ResetLevel();
 
-	//¿É¼ÇUI
+	//ì˜µì…˜UI
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UI") TSubclassOf<UUserWidget> OptionUIClass;
 	UUserWidget* OptionUI;
-	//UI¸ğµå¸¦ È®ÀÎÇÏ´Â º¯¼ö
+	//UIëª¨ë“œë¥¼ í™•ì¸í•˜ëŠ” ë³€ìˆ˜
 	bool IsOptionUIMode;
 
-	//ÀÎº¥Åä¸®UI
+	//ì¸ë²¤í† ë¦¬UI
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UI") TSubclassOf<UInventoryUI> InventoryUIClass;
 	UInventoryUI* InventoryUI;
-	//UI¸ğµå¸¦ È®ÀÎÇÏ´Â º¯¼ö
+	//UIëª¨ë“œë¥¼ í™•ì¸í•˜ëŠ” ë³€ìˆ˜
 	bool IsInventoryUIMode;
 
-	//ÀÎº¥Åä¸®UI
+	//ì¸ë²¤í† ë¦¬UI
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UI") TSubclassOf<UUserWidget> SkillUIClass;
 	UUserWidget* SkillUI;
-	//UI¸ğµå¸¦ È®ÀÎÇÏ´Â º¯¼ö
+	//UIëª¨ë“œë¥¼ í™•ì¸í•˜ëŠ” ë³€ìˆ˜
 	bool IsSkillUIMode;
 
-	//ÀÎ°ÔÀÓUI
+	//ì¸ê²Œì„UI
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UI") TSubclassOf<UIngameUI> IngameUIClass;
 	UIngameUI* IngameUI;
+
+	//ìŠ¬ë¡¯ ë°°ì—´(ì•„ì´í…œIDë¥¼ ë“±ë¡ í›„ ì‚¬ìš©)
+	int Slot[5];
+
+	//1ë²ˆ ìŠ¬ë¡¯ ì‚¬ìš©
+	void UseSlot1();
+	//2ë²ˆ ìŠ¬ë¡¯ ì‚¬ìš©
+	void UseSlot2();
+	//3ë²ˆ ìŠ¬ë¡¯ ì‚¬ìš©
+	void UseSlot3();
+	//4ë²ˆ ìŠ¬ë¡¯ ì‚¬ìš©
+	void UseSlot4();
+	//5ë²ˆ ìŠ¬ë¡¯ ì‚¬ìš©
+	void UseSlot5();
+
+	//1ë²ˆ ìŠ¬ë¡¯ ì¿¨íƒ€ì„
+	FTimerHandle Slot1TimerHandle;
+	void Slot1TimerEnd();
+	bool IsSlot1Cooltime;
+	float Slot1Cooltime;
+	//2ë²ˆ ìŠ¬ë¡¯ ì¿¨íƒ€ì„
+	FTimerHandle Slot2TimerHandle;
+	void Slot2TimerEnd();
+	bool IsSlot2Cooltime;
+	float Slot2Cooltime;
+	//3ë²ˆ ìŠ¬ë¡¯ ì¿¨íƒ€ì„
+	FTimerHandle Slot3TimerHandle;
+	void Slot3TimerEnd();
+	bool IsSlot3Cooltime;
+	float Slot3Cooltime;
+	//4ë²ˆ ìŠ¬ë¡¯ ì¿¨íƒ€ì„
+	FTimerHandle Slot4TimerHandle;
+	void Slot4TimerEnd();
+	bool IsSlot4Cooltime;
+	float Slot4Cooltime;
+	//5ë²ˆ ìŠ¬ë¡¯ ì¿¨íƒ€ì„
+	FTimerHandle Slot5TimerHandle;
+	void Slot5TimerEnd();
+	bool IsSlot5Cooltime;
+	float Slot5Cooltime;
 
 protected:
 	virtual void BeginPlay() override;
 
-	//ÀÌµ¿ ¼³Á¤
+	//ì´ë™ ì„¤ì •
 	void MoveForward(float value);
 	void MoveRight(float value);
 
-	//ÀÌµ¿¼Óµµ
+	//ì´ë™ì†ë„
 	float MoveSpeed;
 
-	//ÀÌµ¿ ¿©ºÎ
+	//ì´ë™ ì—¬ë¶€
 	UPROPERTY(BlueprintReadOnly) bool IsWalk;
 
-	//´Ş¸®±â
+	//ë‹¬ë¦¬ê¸°
 	void StartRun();
 	void StopRun();
 
-	//´Ş¸®±â ¿©ºÎ
+	//ë‹¬ë¦¬ê¸° ì—¬ë¶€
 	UPROPERTY(BlueprintReadOnly) bool IsRun;
 
-	//½ÃÁ¡ ¼³Á¤
+	//ì‹œì  ì„¤ì •
 	void Turn(float value);
 	void LookUp(float value);
 	
-	//¿É¼Ç UI¸¦ Á¦¿ÜÇÏ°í UI°¡ ÄÑÁ®ÀÖ´ÂÁö È®ÀÎÇÏ´Â ÇÔ¼ö
+	//ì˜µì…˜ UIë¥¼ ì œì™¸í•˜ê³  UIê°€ ì¼œì ¸ìˆëŠ”ì§€ í™•ì¸í•˜ëŠ” í•¨ìˆ˜
 	bool CheckingUI();
 
-	//¿É¼Ç UI¸¦ Á¦¿ÜÇÏ°í ¸ğµç UI¸¦ ²¨¹ö¸®´Â ÇÔ¼ö
+	//ì˜µì…˜ UIë¥¼ ì œì™¸í•˜ê³  ëª¨ë“  UIë¥¼ êº¼ë²„ë¦¬ëŠ” í•¨ìˆ˜
 	void ShutdownAllUI();
 
-	//Á¡ÇÁÇÔ¼ö
+	//ì í”„í•¨ìˆ˜
 	void StartJump();
 
-	//Å©·Î½ºÇì¾îUI
+	//í¬ë¡œìŠ¤í—¤ì–´UI
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UI") TSubclassOf<UUserWidget> CrosshairUIClass;
 	UUserWidget* CrosshairUI;
 
-	//Å©·Î½ºÇì¾îUI »ı¼ºÇÔ¼ö
+	//í¬ë¡œìŠ¤í—¤ì–´UI ìƒì„±í•¨ìˆ˜
 	void ToggleCrosshair();
 
-	//¸¶¿ì½º¸ğµå
+	//ë§ˆìš°ìŠ¤ëª¨ë“œ
 	void MouseModeOn();
-	//¸¶¿ì½º¸ğµå
+	//ë§ˆìš°ìŠ¤ëª¨ë“œ
 	void MouseModeOff();
 
-	//¸¶¿ì½º À§Ä¡ Áß¾Ó ¼³Á¤
+	//ë§ˆìš°ìŠ¤ ìœ„ì¹˜ ì¤‘ì•™ ì„¤ì •
 	void SetCenterMouse();
 
+	//ìºë¦­í„° ê¸°ë³¸ ìŠ¤í…Ÿ ì •ë¦¬
 	void DefaultStatSeting();
+
 };

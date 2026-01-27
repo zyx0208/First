@@ -62,4 +62,46 @@ void UItemUI::NativeDestruct()
         Tooltip->RemoveFromParent();
         Tooltip = nullptr;
     }
+    if (ItemOptionUI)
+    {
+        ItemOptionUI->RemoveFromParent();
+        ItemOptionUI = nullptr;
+    }
+}
+
+FReply UItemUI::NativeOnMouseButtonDown(const FGeometry& InGeometry, const FPointerEvent& InMouseEvent)
+{
+    //플레이어 정보 가져오기
+    APlayerController* PC = GetOwningPlayer();
+    if (!PC) return FReply::Unhandled();
+
+    //이미 아이템 옵션UI가 있으면 삭제
+    if (ItemOptionUI)
+    {
+        ItemOptionUI->RemoveFromParent();
+        ItemOptionUI = nullptr;
+    }
+
+    if (InMouseEvent.GetEffectingButton() == EKeys::RightMouseButton)
+    {
+        if (ItemOptionUIClass)
+        {
+            if (!ItemOptionUI)
+            {
+                ItemOptionUI = CreateWidget<UItemOptionUI>(GetWorld(), ItemOptionUIClass);
+            }
+            ItemOptionUI->CheckItemInfo(ItemID, Count, ItemType);
+
+            //마우스 위치 정보 가져오기
+            FVector2D MousePos;
+            PC->GetMousePosition(MousePos.X, MousePos.Y);
+            ItemOptionUI->SetPositionInViewport(MousePos, true);
+
+            ItemOptionUI->AddToViewport(100);
+        }
+        
+
+        return FReply::Handled();
+    }
+    return Super::NativeOnMouseButtonDown(InGeometry, InMouseEvent);
 }

@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 #pragma once
 
@@ -18,16 +18,16 @@ struct FIRST_API FItemStructure : public FTableRowBase
     GENERATED_BODY()
 
 public:
-    //¾ÆÀÌÅÛ ÀÎµ¦½º
+    //ì•„ì´í…œ ì¸ë±ìŠ¤
     UPROPERTY(EditAnywhere, BlueprintReadOnly) int ItemID;
-    //¾ÆÀÌÅÛ ÀÌ¸§
+    //ì•„ì´í…œ ì´ë¦„
     UPROPERTY(EditAnywhere, BlueprintReadOnly) FName ItemName;
-    //¾ÆÀÌÅÛ Å¸ÀÔ[Equipment, SkillBook, Consumable, NonConsumable]
+    //ì•„ì´í…œ íƒ€ì…[Equipment, SkillBook, Consumable, NonConsumable]
     UPROPERTY(EditAnywhere, BlueprintReadOnly) EItemType ItemType;
-    //¾ÆÀÌÅÛ ÀÌ¹ÌÁö
+    //ì•„ì´í…œ ì´ë¯¸ì§€
     UPROPERTY(EditAnywhere, BlueprintReadOnly) UTexture2D* ItemIcon;
-    //ÃÖ´ë ½ºÅÃ °³¼ö
+    //ìµœëŒ€ ìŠ¤íƒ ê°œìˆ˜
     UPROPERTY(EditAnywhere, BlueprintReadOnly) int MaxStack;
-    //¾ÆÀÌÅÛ ¼³¸í
+    //ì•„ì´í…œ ì„¤ëª…
     UPROPERTY(EditAnywhere, BlueprintReadOnly) FString Description;
 };

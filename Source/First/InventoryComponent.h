@@ -46,8 +46,13 @@ public:
 	UFUNCTION(BlueprintCallable) bool RemoveItem(int ItemID, int Count);
 
 	//아이템 사용
-	UFUNCTION(BlueprintCallable)bool UseItem(int ItemID);
+	UFUNCTION(BlueprintCallable) bool UseItem(int ItemID);
+
+	//아이템 확인
+	UFUNCTION(BlueprintCallable) bool CheckItem(int ItemID);
 
 	//실시간 인벤토리 반영이 필요할 경우
 	void ApplyInventory();
+
+	void UseConsumable(int ItemID);
 };
