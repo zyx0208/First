@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 #pragma once
 
@@ -19,7 +19,7 @@ class FIRST_API UInventoryUI : public UUserWidget
 	GENERATED_BODY()
 	
 public:
-	//ÇÃ·¹ÀÌ¾î Á¤º¸ ºÒ·¯¿À±â
+	//í”Œë ˆì´ì–´ ì •ë³´ ë¶ˆëŸ¬ì˜¤ê¸°
 	UInventoryComponent* InventoryCP;
 	AMyCharacter* PC;
 
@@ -27,7 +27,7 @@ public:
 	
 	UPROPERTY(EditAnywhere, BlueprintReadOnly) TSubclassOf<UItemUI> ItemUIClass;
 
-	//À§Á¬
+	//ìœ„ì ¯
 	UPROPERTY(meta = (BindWidget)) UButton* CloseButton;
 	UPROPERTY(meta = (BindWidget)) UTextBlock* HPText;
 	UPROPERTY(meta = (BindWidget)) UTextBlock* AttackDamageText;
@@ -35,10 +35,10 @@ public:
 	UPROPERTY(meta = (BindWidget)) UWrapBox* ItemWrapBox;
 
 	//UPROPERTY(meta = (BindWidget)) UTextBlock* LevelText;
-	//»óÈ£ÀÛ¿ë ÇÔ¼ö
+	//ìƒí˜¸ì‘ìš© í•¨ìˆ˜
 	UFUNCTION() void CloseButtonClick();
 	UFUNCTION() void InventorySeting();
 
-	//¾Ö´Ï¸ŞÀÌ¼Ç
+	//ì• ë‹ˆë©”ì´ì…˜
 	UPROPERTY(meta = (BindWidgetAnim), Transient) UWidgetAnimation* OpenAnim;
 };

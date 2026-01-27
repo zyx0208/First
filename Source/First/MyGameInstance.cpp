@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 
 #include "MyGameInstance.h"
@@ -27,7 +27,7 @@ void UMyGameInstance::LoadAudioSettings()
     }
     else
     {
-        //ÀúÀåµÈ ÆÄÀÏÀÌ ¾øÀ¸¸é 1.0f·Î °íÁ¤
+        //ì €ì¥ëœ íŒŒì¼ì´ ì—†ìœ¼ë©´ 1.0fë¡œ ê³ ì •
         GIMasterVolume = 1.0f;
         GIBGMVolume = 1.0f;
         GISFXVolume = 1.0f;

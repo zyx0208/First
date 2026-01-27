@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 
 #include "ItemOptionUI.h"
@@ -218,10 +218,10 @@ void UItemOptionUI::RemoveButtonClick()
 		AMyCharacter* Player = Cast<AMyCharacter>(PC->GetPawn());
 		if (Player)
 		{
-			//¾ÆÀÌÅÛ Á¦°Å
+			//ì•„ì´í…œ ì œê±°
 			Player->CharacterInventory->RemoveItem(ItemID, 1);
 
-			//0°³°¡ µÇ¸é Äü½½·Ôµµ Á¦°Å
+			//0ê°œê°€ ë˜ë©´ í€µìŠ¬ë¡¯ë„ ì œê±°
 			if (!Player->CharacterInventory->CheckItem(ItemID))
 			{
 				for (int i = 0; i < 5; i++)

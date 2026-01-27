@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 #pragma once
 
@@ -19,6 +19,6 @@ public:
     virtual void SetupSkills() override;
 
 protected:
-    //¹«»ç Àü¿ë ½ºÅ³
+    //ë¬´ì‚¬ ì „ìš© ìŠ¤í‚¬
     void ShieldBash();
 };

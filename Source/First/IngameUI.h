@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 #pragma once
 
@@ -12,7 +12,7 @@
 #include "InventoryComponent.h"
 #include "IngameUI.generated.h"
 
-//¾çÂÊ¿¡¼­ÀÇ ÂüÁ¶ ¶§¹®¿¡ Àü¹æ ¼±¾ğ
+//ì–‘ìª½ì—ì„œì˜ ì°¸ì¡° ë•Œë¬¸ì— ì „ë°© ì„ ì–¸
 class AMyCharacter;
 
 UCLASS()
@@ -21,43 +21,43 @@ class FIRST_API UIngameUI : public UUserWidget
 	GENERATED_BODY()
 	
 public:
-	//ÇÃ·¹ÀÌ¾î Á¤º¸ ºÒ·¯¿À±â
+	//í”Œë ˆì´ì–´ ì •ë³´ ë¶ˆëŸ¬ì˜¤ê¸°
 	UPROPERTY(BlueprintReadOnly, Category = "Player") AMyCharacter* PC;
 	UPROPERTY(BlueprintReadOnly, Category = "Player") UInventoryComponent* PlayerInventory;
 	
-	//Ã¼·Â¹Ù ¼³Á¤ ÇÔ¼ö
+	//ì²´ë ¥ë°” ì„¤ì • í•¨ìˆ˜
 	UFUNCTION(BlueprintCallable) void ChangeHPBar();
-	//°æÇèÄ¡¹Ù ¼³Á¤ ÇÔ¼ö
+	//ê²½í—˜ì¹˜ë°” ì„¤ì • í•¨ìˆ˜
 	UFUNCTION(BlueprintCallable) void ChangeEXPBar();
-	//·¹º§¹Ù ¼³Á¤ ÇÔ¼ö
+	//ë ˆë²¨ë°” ì„¤ì • í•¨ìˆ˜
 	UFUNCTION(BlueprintCallable) void ChangeLevelBar();
-	//Äü½½·Ô¹Ù ¼³Á¤ ÇÔ¼ö
+	//í€µìŠ¬ë¡¯ë°” ì„¤ì • í•¨ìˆ˜
 	UFUNCTION(BlueprintCallable) void ChangeSlotBar();
 
-	//½ºÅ³1 ÄğÅ¸ÀÓ Àû¿ë UI
+	//ìŠ¤í‚¬1 ì¿¨íƒ€ì„ ì ìš© UI
 	void Skill1CooltimeUI(float Current, float Max);
-	//½ºÅ³2 ÄğÅ¸ÀÓ Àû¿ë UI
+	//ìŠ¤í‚¬2 ì¿¨íƒ€ì„ ì ìš© UI
 	void Skill2CooltimeUI(float Current, float Max);
-	//½ºÅ³3 ÄğÅ¸ÀÓ Àû¿ë UI
+	//ìŠ¤í‚¬3 ì¿¨íƒ€ì„ ì ìš© UI
 	void Skill3CooltimeUI(float Current, float Max);
-	//½ºÅ³4 ÄğÅ¸ÀÓ Àû¿ë UI
+	//ìŠ¤í‚¬4 ì¿¨íƒ€ì„ ì ìš© UI
 	void Skill4CooltimeUI(float Current, float Max);
 
-	//½½·Ô1 ÄğÅ¸ÀÓ Àû¿ë UI
+	//ìŠ¬ë¡¯1 ì¿¨íƒ€ì„ ì ìš© UI
 	void Slot1CooltimeUI(float Current, float Max);
-	//½½·Ô2 ÄğÅ¸ÀÓ Àû¿ë UI
+	//ìŠ¬ë¡¯2 ì¿¨íƒ€ì„ ì ìš© UI
 	void Slot2CooltimeUI(float Current, float Max);
-	//½½·Ô3 ÄğÅ¸ÀÓ Àû¿ë UI
+	//ìŠ¬ë¡¯3 ì¿¨íƒ€ì„ ì ìš© UI
 	void Slot3CooltimeUI(float Current, float Max);
-	//½½·Ô4 ÄğÅ¸ÀÓ Àû¿ë UI
+	//ìŠ¬ë¡¯4 ì¿¨íƒ€ì„ ì ìš© UI
 	void Slot4CooltimeUI(float Current, float Max);
-	//½½·Ô5 ÄğÅ¸ÀÓ Àû¿ë UI
+	//ìŠ¬ë¡¯5 ì¿¨íƒ€ì„ ì ìš© UI
 	void Slot5CooltimeUI(float Current, float Max);
 
 protected:
 	void NativeConstruct();
 
-	//À§Á¬
+	//ìœ„ì ¯
 	UPROPERTY(meta = (BindWidget)) UButton* OptionButton;
 	UPROPERTY(meta = (BindWidget)) UButton* InventoryButton;
 	UPROPERTY(meta = (BindWidget)) UButton* SkillButton;
@@ -81,11 +81,11 @@ protected:
 	UPROPERTY(meta = (BindWidget)) UImage* Slot4Image;
 	UPROPERTY(meta = (BindWidget)) UImage* Slot5Image;
 
-	//¸ÓÅ×¸®¾ó ÀÎ½ºÅÏ½º Á¢±Ù º¯¼ö
+	//ë¨¸í…Œë¦¬ì–¼ ì¸ìŠ¤í„´ìŠ¤ ì ‘ê·¼ ë³€ìˆ˜
 	UMaterialInstanceDynamic* HPBarImageMT;
 	UMaterialInstanceDynamic* EXPBarImageMT;
 
-	//»óÈ£ÀÛ¿ë ÇÔ¼ö
+	//ìƒí˜¸ì‘ìš© í•¨ìˆ˜
 	UFUNCTION() void OptionButtonClick();
 	UFUNCTION() void InventoryButtonClick();
 	UFUNCTION() void SkillButtonClick();

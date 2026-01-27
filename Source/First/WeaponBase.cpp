@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 
 #include "WeaponBase.h"
@@ -29,10 +29,10 @@ void AWeaponBase::Tick(float DeltaTime)
 
 void AWeaponBase::SetupSkills()
 {
-    //¹è¿­ ÃÊ±âÈ­
+    //ë°°ì—´ ì´ˆê¸°í™”
     AllSkills.Empty();
 
-    //°ø¿ë ½ºÅ³ÀÌ »ı±â¸é Ãß°¡ÇÒ ¿¹Á¤
+    //ê³µìš© ìŠ¤í‚¬ì´ ìƒê¸°ë©´ ì¶”ê°€í•  ì˜ˆì •
 }
 
 void AWeaponBase::UseSkill(int Slot)

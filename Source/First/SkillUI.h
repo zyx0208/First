@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 #pragma once
 
@@ -17,12 +17,12 @@ class FIRST_API USkillUI : public UUserWidget
 	
 protected:
 	void NativeConstruct();
-	//À§Á¬
+	//ìœ„ì ¯
 	UPROPERTY(meta = (BindWidget)) UButton* CloseButton;
 
-	//»óÈ£ÀÛ¿ë ÇÔ¼ö
+	//ìƒí˜¸ì‘ìš© í•¨ìˆ˜
 	UFUNCTION() void CloseButtonClick();
 
-	//¾Ö´Ï¸ŞÀÌ¼Ç
+	//ì• ë‹ˆë©”ì´ì…˜
 	UPROPERTY(meta = (BindWidgetAnim), Transient) UWidgetAnimation* OpenAnim;
 };

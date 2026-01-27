@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 
 #include "SkillUI.h"
@@ -8,10 +8,10 @@ void USkillUI::NativeConstruct()
 {
 	Super::NativeConstruct();
 
-	//ÀÌº¥Æ® ÇÒ´ç
+	//ì´ë²¤íŠ¸ í• ë‹¹
 	CloseButton->OnClicked.AddDynamic(this, &USkillUI::CloseButtonClick);
 
-	//¿ÀÇÂ ¾Ö´Ï¸ŞÀÌ¼Ç
+	//ì˜¤í”ˆ ì• ë‹ˆë©”ì´ì…˜
 	if (OpenAnim)
 	{
 		PlayAnimation(OpenAnim);

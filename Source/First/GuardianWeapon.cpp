@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 
 #include "GuardianWeapon.h"
@@ -12,12 +12,12 @@ AGuardianWeapon::AGuardianWeapon()
 
 void AGuardianWeapon::SetupSkills()
 {
-    //¹è¿­ ÃÊ±âÈ­
+    //ë°°ì—´ ì´ˆê¸°í™”
     AllSkills.Empty();
 
-    //°ø¿ë ½ºÅ³ ¸ÕÀú µî·Ï
+    //ê³µìš© ìŠ¤í‚¬ ë¨¼ì € ë“±ë¡
     Super::SetupSkills();
 
-    //¼öÈ£ÀÚ Àü¿ë ½ºÅ³ µî·Ï
+    //ìˆ˜í˜¸ì ì „ìš© ìŠ¤í‚¬ ë“±ë¡
     //AllSkills.Add(FSkillDelegate::CreateUObject(this, &AGuardianWeapon::??));
 }

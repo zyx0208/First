@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 #pragma once
 
@@ -19,14 +19,14 @@ class FIRST_API UOption : public UUserWidget
 protected:
 	void NativeConstruct();
 
-	//À§Á¬
+	//ìœ„ì ¯
 	UPROPERTY(meta = (BindWidget)) UButton* CloseButton;
 	UPROPERTY(meta = (BindWidget)) UButton* ExitButton;
 	UPROPERTY(meta = (BindWidget)) USlider* MasterSlider;
 	UPROPERTY(meta = (BindWidget)) USlider* BGMSlider;
 	UPROPERTY(meta = (BindWidget)) USlider* SFXSlider;
 
-	//»óÈ£ÀÛ¿ë ÇÔ¼ö
+	//ìƒí˜¸ì‘ìš© í•¨ìˆ˜
 	UFUNCTION() void CloseButtonClick();
 	UFUNCTION() void ExitButtonClick();
 	UFUNCTION() void MasterSliderValueChanged(float value);
@@ -34,6 +34,6 @@ protected:
 	UFUNCTION() void SFXSliderValueChanged(float value);
 	
 
-	//¾Ö´Ï¸ŞÀÌ¼Ç
+	//ì• ë‹ˆë©”ì´ì…˜
 	UPROPERTY(meta = (BindWidgetAnim), Transient) UWidgetAnimation* OpenAnim;
 };

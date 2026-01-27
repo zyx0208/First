@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 #pragma once
 
@@ -30,28 +30,28 @@ public:
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
-	//¾ÆÀÌÅÛ µ¥ÀÌÅÍÅ×ÀÌºí
+	//ì•„ì´í…œ ë°ì´í„°í…Œì´ë¸”
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UI") UDataTable* ItemDataTable;
 
-	//¾ÆÀÌÅÛ µ¥ÀÌÅÍÅ×ÀÌºí¿¡¼­ Á¤º¸¸¦ °¡Á®¿À´Â ÇÔ¼ö
+	//ì•„ì´í…œ ë°ì´í„°í…Œì´ë¸”ì—ì„œ ì •ë³´ë¥¼ ê°€ì ¸ì˜¤ëŠ” í•¨ìˆ˜
 	FItemStructure* GetItemData(int ItemID);
 
-	//ÀÎº¥Åä¸® ¹è¿­
+	//ì¸ë²¤í† ë¦¬ ë°°ì—´
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly) TArray<FInventoryItemStructure> InventoryItems;
 
-	//¾ÆÀÌÅÛ Ãß°¡ ÇÔ¼ö
+	//ì•„ì´í…œ ì¶”ê°€ í•¨ìˆ˜
 	UFUNCTION(BlueprintCallable) bool AddItem(int ItemID, int Count);
 
-	//¾ÆÀÌÅÛ Á¦°Å
+	//ì•„ì´í…œ ì œê±°
 	UFUNCTION(BlueprintCallable) bool RemoveItem(int ItemID, int Count);
 
-	//¾ÆÀÌÅÛ »ç¿ë
+	//ì•„ì´í…œ ì‚¬ìš©
 	UFUNCTION(BlueprintCallable) bool UseItem(int ItemID);
 
-	//¾ÆÀÌÅÛ È®ÀÎ
+	//ì•„ì´í…œ í™•ì¸
 	UFUNCTION(BlueprintCallable) bool CheckItem(int ItemID);
 
-	//½Ç½Ã°£ ÀÎº¥Åä¸® ¹İ¿µÀÌ ÇÊ¿äÇÒ °æ¿ì
+	//ì‹¤ì‹œê°„ ì¸ë²¤í† ë¦¬ ë°˜ì˜ì´ í•„ìš”í•  ê²½ìš°
 	void ApplyInventory();
 
 	void UseConsumable(int ItemID);

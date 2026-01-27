@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 #pragma once
 
@@ -23,12 +23,12 @@ protected:
 	ALongswordBase();
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Weapon") UStaticMeshComponent* WeaponMesh;
 	
-	//¹«±â ¾Ö´Ï¸ŞÀÌ¼Ç
+	//ë¬´ê¸° ì• ë‹ˆë©”ì´ì…˜
 	FTimeline SwingTimeline;
 	UPROPERTY(EditAnywhere, Category = "Timeline") UCurveFloat* SwingCurve;
 	UFUNCTION() void SwingTimelineUpdate(float value);
 	UFUNCTION() void SwingTimelineFinished();
 	
-	//Àå°Ë °ø¿ë ½ºÅ³ 1 : ³»·ÁÂï±â
+	//ì¥ê²€ ê³µìš© ìŠ¤í‚¬ 1 : ë‚´ë ¤ì°ê¸°
 	void Smash();
 };

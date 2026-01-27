@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 
 #include "IngameUI.h"
@@ -10,29 +10,29 @@ void UIngameUI::NativeConstruct()
 {
 	Super::NativeConstruct();
 
-	//ÇÃ·¹ÀÌ¾î ºÒ·¯¿À±â
+	//í”Œë ˆì´ì–´ ë¶ˆëŸ¬ì˜¤ê¸°
 	PC = Cast<AMyCharacter>(GetOwningPlayerPawn());
 	if (PC)
 	{
 		PlayerInventory = PC->CharacterInventory;
 	}
 
-	//ÀÌº¥Æ® ÇÒ´ç
+	//ì´ë²¤íŠ¸ í• ë‹¹
 	OptionButton->OnClicked.AddDynamic(this, &UIngameUI::OptionButtonClick);
 	InventoryButton->OnClicked.AddDynamic(this, &UIngameUI::InventoryButtonClick);
 	SkillButton->OnClicked.AddDynamic(this, &UIngameUI::SkillButtonClick);
 
-	//¸ÓÅ×¸®¾ó Á¢±Ù
+	//ë¨¸í…Œë¦¬ì–¼ ì ‘ê·¼
 	if (HPBarImage)
 	{
-		//Ã¼·Â ¸ÓÅ×¸®¾ó °¡Á®¿À±â
+		//ì²´ë ¥ ë¨¸í…Œë¦¬ì–¼ ê°€ì ¸ì˜¤ê¸°
 		UMaterialInterface* HPMaterial = Cast<UMaterialInterface>(HPBarImage->GetBrush().GetResourceObject());
 		if (HPMaterial)
 		{
 			HPBarImageMT = UMaterialInstanceDynamic::Create(HPMaterial, this);
 			HPBarImage->SetBrushFromMaterial(HPBarImageMT);
 		}
-		//°æÇèÄ¡ ¸ÓÅ×¸®¾ó °¡Á®¿À±â
+		//ê²½í—˜ì¹˜ ë¨¸í…Œë¦¬ì–¼ ê°€ì ¸ì˜¤ê¸°
 		UMaterialInterface* EXPMaterial = Cast<UMaterialInterface>(EXPBarImage->GetBrush().GetResourceObject());
 		if (EXPMaterial)
 		{
@@ -65,13 +65,13 @@ void UIngameUI::ChangeHPBar()
 {
 	if (PC)
 	{
-		//Ã¼·Â ¸ÓÅ×¸®¾ó ÆÄ¶ó¹ÌÅÍ °ª º¯°æ
+		//ì²´ë ¥ ë¨¸í…Œë¦¬ì–¼ íŒŒë¼ë¯¸í„° ê°’ ë³€ê²½
 		if (HPBarImageMT)
 		{
 			HPBarImageMT->SetScalarParameterValue(TEXT("Percentage"), PC->HPPercent());
 		}
 		
-		//Ã¼·Â ¼öÄ¡°ª Ç¥½Ã
+		//ì²´ë ¥ ìˆ˜ì¹˜ê°’ í‘œì‹œ
 		if (PC->CurrentHP > 0)
 		{
 			FText HS = FText::FromString(FString::Printf(TEXT("%d  /  %d"), PC->CurrentHP, PC->MaxHP));
@@ -89,13 +89,13 @@ void UIngameUI::ChangeEXPBar()
 {
 	if (PC)
 	{
-		//°æÇèÄ¡ ¸ÓÅ×¸®¾ó ÆÄ¶ó¹ÌÅÍ °ª º¯°æ
+		//ê²½í—˜ì¹˜ ë¨¸í…Œë¦¬ì–¼ íŒŒë¼ë¯¸í„° ê°’ ë³€ê²½
 		if (EXPBarImageMT)
 		{
 			EXPBarImageMT->SetScalarParameterValue(TEXT("Percentage"), PC->EXPPercent());
 		}
 
-		//Ã¼·Â ¼öÄ¡°ª Ç¥½Ã
+		//ì²´ë ¥ ìˆ˜ì¹˜ê°’ í‘œì‹œ
 		if (PC->EXP >= 0)
 		{
 			FText ES = FText::FromString(FString::Printf(TEXT("%.0f%%"), PC->EXPPercent() * 100.0f));
@@ -113,7 +113,7 @@ void UIngameUI::ChangeLevelBar()
 {
 	if (PC)
 	{
-		//·¹º§ ¼öÄ¡ º¯°æ
+		//ë ˆë²¨ ìˆ˜ì¹˜ ë³€ê²½
 		FText LS = FText::FromString(FString::Printf(TEXT("LV. %d"), PC->Level));
 		LevelText->SetText(LS);
 	}

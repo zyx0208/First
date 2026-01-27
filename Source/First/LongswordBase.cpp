@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 
 #include "LongswordBase.h"
@@ -11,10 +11,10 @@ ALongswordBase::ALongswordBase()
 
 void ALongswordBase::SetupSkills()
 {
-    //¹è¿­ ÃÊ±âÈ­
+    //ë°°ì—´ ì´ˆê¸°í™”
     AllSkills.Empty();
     
-    //¾Ö´Ï¸ŞÀÌ¼Ç °ü·Ã µî·Ï
+    //ì• ë‹ˆë©”ì´ì…˜ ê´€ë ¨ ë“±ë¡
     if (SwingCurve)
     {
         FOnTimelineFloat UpdateFunc;
@@ -28,10 +28,10 @@ void ALongswordBase::SetupSkills()
         SwingTimeline.SetLooping(false);
     }
 
-    //°ø¿ë ½ºÅ³ ¸ÕÀú µî·Ï
+    //ê³µìš© ìŠ¤í‚¬ ë¨¼ì € ë“±ë¡
     Super::SetupSkills();
 
-    //Àå°Ë °ø¿ë ½ºÅ³ µî·Ï
+    //ì¥ê²€ ê³µìš© ìŠ¤í‚¬ ë“±ë¡
     AllSkills.Add(FSkillDelegate::CreateUObject(this, &ALongswordBase::Smash));
 }
 
@@ -39,7 +39,7 @@ void ALongswordBase::Tick(float DeltaTime)
 {
     Super::Tick(DeltaTime);
 
-    //¾Ö´Ï¸ŞÀÌ¼Ç Æ½ µî·Ï
+    //ì• ë‹ˆë©”ì´ì…˜ í‹± ë“±ë¡
     SwingTimeline.TickTimeline(DeltaTime);
 }
 
@@ -59,25 +59,25 @@ void ALongswordBase::SwingTimelineFinished()
 
 void ALongswordBase::Smash()
 {
-    //°ø°İ ½ÃÀÛ
+    //ê³µê²© ì‹œì‘
     IsAttacking = true;
 
-    //Áö¿¬ »ı¼º
+    //ì§€ì—° ìƒì„±
     AWeaponAttack* Attack = GetWorld()->SpawnActorDeferred<AWeaponAttack>(AWeaponAttack::StaticClass(), FTransform::Identity);
     if (!Attack) return;
-    //°ø°İ ¹üÀ§ ºÙÀÌ±â
+    //ê³µê²© ë²”ìœ„ ë¶™ì´ê¸°
     Attack->AttachToComponent(Root, FAttachmentTransformRules::KeepRelativeTransform);
-    //°ø°İ À§Ä¡ ¼³Á¤
+    //ê³µê²© ìœ„ì¹˜ ì„¤ì •
     Attack->SetActorRelativeLocation(FVector(0.0f, 0.0f, 50.0f));
     Attack->SetActorRelativeRotation(FRotator::ZeroRotator);
-    //¸Å°³º¯¼ö ÁÖÀÔ
+    //ë§¤ê°œë³€ìˆ˜ ì£¼ì…
     Attack->Damage = 30.f;
     Attack->Radius = 20.f;
     Attack->LifeTime = 0.5f;
-    //»ı¼º ¿Ï·á
+    //ìƒì„± ì™„ë£Œ
     Attack->FinishSpawning(FTransform::Identity);
 
-    //°Ë ¿òÁ÷ÀÓ
+    //ê²€ ì›€ì§ì„
     SwingTimeline.PlayFromStart();
 
     UE_LOG(LogTemp, Log, TEXT("LongSword HorizontalSlash executed!"));

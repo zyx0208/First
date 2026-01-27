@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 #pragma once
 
@@ -15,20 +15,20 @@ class FIRST_API UMyGameInstance : public UGameInstance
 	GENERATED_BODY()
 	
 public:
-    //°ÔÀÓÀÌ ÄÑÁö´Â ¼ø°£
+    //ê²Œì„ì´ ì¼œì§€ëŠ” ìˆœê°„
     virtual void Init() override;
-    //°ÔÀÓÀÌ ²¨Áö´Â ¼ø°£
+    //ê²Œì„ì´ êº¼ì§€ëŠ” ìˆœê°„
     virtual void Shutdown() override;
 
-    //¿Àµğ¿À ¼³Á¤ ºÒ·¯¿À±â
+    //ì˜¤ë””ì˜¤ ì„¤ì • ë¶ˆëŸ¬ì˜¤ê¸°
     void LoadAudioSettings();
-    //¿Àµğ¿À ¼³Á¤ ÀúÀå
+    //ì˜¤ë””ì˜¤ ì„¤ì • ì €ì¥
     void SaveAudioSettings();
 
-    //¸¶½ºÅÍ º¼·ı(°ÔÀÓÀÎ½ºÅÏ½º ¿ë)
+    //ë§ˆìŠ¤í„° ë³¼ë¥¨(ê²Œì„ì¸ìŠ¤í„´ìŠ¤ ìš©)
     UPROPERTY(BlueprintReadWrite) float GIMasterVolume;
-    //¹è°æÀ½¾Ç º¼·ı(°ÔÀÓÀÎ½ºÅÏ½º ¿ë)
+    //ë°°ê²½ìŒì•… ë³¼ë¥¨(ê²Œì„ì¸ìŠ¤í„´ìŠ¤ ìš©)
     UPROPERTY(BlueprintReadWrite) float GIBGMVolume;
-    //È¿°úÀ½ º¼·ı(°ÔÀÓÀÎ½ºÅÏ½º ¿ë)
+    //íš¨ê³¼ìŒ ë³¼ë¥¨(ê²Œì„ì¸ìŠ¤í„´ìŠ¤ ìš©)
     UPROPERTY(BlueprintReadWrite) float GISFXVolume;
 };

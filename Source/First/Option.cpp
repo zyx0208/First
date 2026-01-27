@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 
 #include "Option.h"
@@ -11,7 +11,7 @@ void UOption::NativeConstruct()
 {
 	Super::NativeConstruct();
 
-	//ÃÊ±â°ª ¼³Á¤
+	//ì´ˆê¸°ê°’ ì„¤ì •
 	UMyGameInstance* GI = Cast<UMyGameInstance>(GetGameInstance());
 	if (GI)
 	{
@@ -20,14 +20,14 @@ void UOption::NativeConstruct()
 		SFXSlider->SetValue(GI->GISFXVolume);
 	}
 
-	//ÀÌº¥Æ® ÇÒ´ç
+	//ì´ë²¤íŠ¸ í• ë‹¹
 	CloseButton->OnClicked.AddDynamic(this, &UOption::CloseButtonClick);
 	ExitButton->OnClicked.AddDynamic(this, &UOption::ExitButtonClick);
 	MasterSlider->OnValueChanged.AddDynamic(this, &UOption::MasterSliderValueChanged);
 	BGMSlider->OnValueChanged.AddDynamic(this, &UOption::BGMSliderValueChanged);
 	SFXSlider->OnValueChanged.AddDynamic(this, &UOption::SFXSliderValueChanged);
 
-	//¿ÀÇÂ ¾Ö´Ï¸ŞÀÌ¼Ç
+	//ì˜¤í”ˆ ì• ë‹ˆë©”ì´ì…˜
 	if (OpenAnim)
 	{
 		PlayAnimation(OpenAnim);

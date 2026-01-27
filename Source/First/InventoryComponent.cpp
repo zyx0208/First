@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 
 #include "InventoryComponent.h"
@@ -36,10 +36,10 @@ void UInventoryComponent::TickComponent(float DeltaTime, ELevelTick TickType, FA
 
 FItemStructure* UInventoryComponent::GetItemData(int ItemID)
 {
-	//µ¥ÀÌÅÍº£ÀÌ½º°¡ ¾øÀ» °æ¿ì null ¹İÈ¯
+	//ë°ì´í„°ë² ì´ìŠ¤ê°€ ì—†ì„ ê²½ìš° null ë°˜í™˜
 	if (!ItemDataTable) return nullptr;
 
-	//ItemID·Î DataTable ÀüÃ¼ ¼øÈ¸
+	//ItemIDë¡œ DataTable ì „ì²´ ìˆœíšŒ
 	for (auto& Row : ItemDataTable->GetRowMap())
 	{
 		FItemStructure* Item = (FItemStructure*)Row.Value;
@@ -67,30 +67,30 @@ bool UInventoryComponent::CheckItem(int ItemID)
 
 bool UInventoryComponent::AddItem(int ItemID, int Count)
 {
-    //°³¼ö°¡ 0ÀÌÇÏ¸é ÇÔ¼ö Ãë¼Ò
+    //ê°œìˆ˜ê°€ 0ì´í•˜ë©´ í•¨ìˆ˜ ì·¨ì†Œ
     if (Count <= 0) return false;
     UE_LOG(LogTemp, Log, TEXT("Item Count : %d"), Count);
 
-    //¾ÆÀÌÅÛ Á¤º¸ °¡Á®¿À±â
+    //ì•„ì´í…œ ì •ë³´ ê°€ì ¸ì˜¤ê¸°
     FItemStructure* ItemData = GetItemData(ItemID);
     if (!ItemData) return false;
     UE_LOG(LogTemp, Log, TEXT("Add Item ItemID : %d"), ItemID);
 
-    //ÀÌ¹Ì ÀÖ´Â ¾ÆÀÌÅÛ Ã£±â
+    //ì´ë¯¸ ìˆëŠ” ì•„ì´í…œ ì°¾ê¸°
     int TempCount = Count;
     for (FInventoryItemStructure& InvItem : InventoryItems)
     {
         if (TempCount <= 0) return true;
         if (InvItem.ItemID == ItemID)
         {
-            if (InvItem.Stack + TempCount > ItemData->MaxStack) //½ºÅÃÀÌ ÃÖ´ëÀÏ °æ¿ì
+            if (InvItem.Stack + TempCount > ItemData->MaxStack) //ìŠ¤íƒì´ ìµœëŒ€ì¼ ê²½ìš°
             {
                 TempCount -= ItemData->MaxStack - InvItem.Stack;
                 InvItem.Stack += ItemData->MaxStack - InvItem.Stack;
                 UE_LOG(LogTemp, Log, TEXT("Max Item Stack : %d"), InvItem.Stack);
                 continue;
             }
-            else //½ºÅÃÀÌ ÃÖ´ë°¡ ¾Æ´Ò °æ¿ì
+            else //ìŠ¤íƒì´ ìµœëŒ€ê°€ ì•„ë‹ ê²½ìš°
             {
                 InvItem.Stack += TempCount;
                 UE_LOG(LogTemp, Log, TEXT("Now Item Stack : %d"), InvItem.Stack);
@@ -100,7 +100,7 @@ bool UInventoryComponent::AddItem(int ItemID, int Count)
         }
     }
 
-    // »õ ¾ÆÀÌÅÛ Ãß°¡
+    // ìƒˆ ì•„ì´í…œ ì¶”ê°€
     while (TempCount > 0)
     {
         if (TempCount >= ItemData->MaxStack)
@@ -145,7 +145,7 @@ bool UInventoryComponent::RemoveItem(int ItemID, int Count)
             return true;
         }
     }
-    return false; //¾ÆÀÌÅÛÀÌ ¾ø´Â °æ¿ì
+    return false; //ì•„ì´í…œì´ ì—†ëŠ” ê²½ìš°
 }
 
 bool UInventoryComponent::UseItem(int ItemID)
@@ -163,15 +163,15 @@ bool UInventoryComponent::UseItem(int ItemID)
 
     UE_LOG(LogTemp, Log, TEXT("Use Item : %d"), ItemID);
 
-    // ¿©±â¼­ ItemType º° Ã³¸®
+    // ì—¬ê¸°ì„œ ItemType ë³„ ì²˜ë¦¬
     switch (ItemData->ItemType)
     {
     case EItemType::Equipment:
-        //ÀåºñÅÛ »ç¿ë ÄÚµå
+        //ì¥ë¹„í…œ ì‚¬ìš© ì½”ë“œ
         break;
 
     case EItemType::SkillBook:
-        //½ºÅ³ ºÏ »ç¿ë ÄÚµå
+        //ìŠ¤í‚¬ ë¶ ì‚¬ìš© ì½”ë“œ
         break;
 
     case EItemType::Consumable:
@@ -180,7 +180,7 @@ bool UInventoryComponent::UseItem(int ItemID)
         break;
 
     case EItemType::NonConsumable:
-        //ºñ»ç¿ë ¾ÆÀÌÅÛ ÄÚµå
+        //ë¹„ì‚¬ìš© ì•„ì´í…œ ì½”ë“œ
         break;
 
     default:

@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 
 #include "KnightWeapon.h"
@@ -12,13 +12,13 @@ AKnightWeapon::AKnightWeapon()
 
 void AKnightWeapon::SetupSkills()
 {
-    //¹è¿­ ÃÊ±âÈ­
+    //ë°°ì—´ ì´ˆê¸°í™”
     AllSkills.Empty();
 
-    //°ø¿ë ½ºÅ³ ¸ÕÀú µî·Ï
+    //ê³µìš© ìŠ¤í‚¬ ë¨¼ì € ë“±ë¡
     Super::SetupSkills();
 
-    //¹«»ç Àü¿ë ½ºÅ³ µî·Ï
+    //ë¬´ì‚¬ ì „ìš© ìŠ¤í‚¬ ë“±ë¡
     AllSkills.Add(FSkillDelegate::CreateUObject(this, &AKnightWeapon::ShieldBash));
 }
 

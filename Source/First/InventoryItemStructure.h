@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 #pragma once
 
@@ -14,8 +14,8 @@ struct FIRST_API FInventoryItemStructure : public FTableRowBase
 public:
 	FInventoryItemStructure();
 	FInventoryItemStructure(int ItemIDValue, int StackValue);
-	//¾ÆÀÌÅÛ ÀÎµ¦½º
+	//ì•„ì´í…œ ì¸ë±ìŠ¤
 	UPROPERTY(EditAnywhere, BlueprintReadOnly) int ItemID;
-	//¾ÆÀÌÅÛ °³¼ö
+	//ì•„ì´í…œ ê°œìˆ˜
 	UPROPERTY(EditAnywhere, BlueprintReadOnly) int Stack;
 };

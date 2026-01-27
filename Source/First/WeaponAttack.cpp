@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+Ôªø// Fill out your copyright notice in the Description page of Project Settings.
 
 
 #include "WeaponAttack.h"
@@ -27,11 +27,11 @@ void AWeaponAttack::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-    // ∞¯∞› π¸¿ß Ω√∞¢»≠
+    // Í≥µÍ≤© Î≤îÏúÑ ÏãúÍ∞ÅÌôî
     if (AttackCollision)
     {
         FVector Center = AttackCollision->GetComponentLocation();
-        float SphereRadius = AttackCollision->GetScaledSphereRadius(); // ƒ›∏Æ¿¸ Sphere ≈©±‚
+        float SphereRadius = AttackCollision->GetScaledSphereRadius(); // ÏΩúÎ¶¨Ï†Ñ Sphere ÌÅ¨Í∏∞
 
         DrawDebugSphere(GetWorld(), Center, SphereRadius, 16, FColor::Red,false, -1.f, 0, 2.f);
     }

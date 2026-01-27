@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 
 #include "TestWidget.h"
@@ -10,7 +10,7 @@ void UTestWidget::NativeConstruct()
 {
 	Super::NativeConstruct();
 
-	//ÀÌº¥Æ® ÇÒ´ç
+	//ì´ë²¤íŠ¸ í• ë‹¹
 	TestButton->OnClicked.AddDynamic(this, &UTestWidget::TestButtonClick);
 }
 
@@ -20,7 +20,7 @@ void UTestWidget::TestButtonClick()
 
 	if (PC)
 	{
-		//ÇÃ·¹ÀÌ¾î Ä³¸¯ÅÍ ÇÔ¼ö ºÒ·¯¿À±â
+		//í”Œë ˆì´ì–´ ìºë¦­í„° í•¨ìˆ˜ ë¶ˆëŸ¬ì˜¤ê¸°
 
 	}
 }

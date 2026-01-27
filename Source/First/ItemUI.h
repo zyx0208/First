@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 #pragma once
 
@@ -20,43 +20,43 @@ class FIRST_API UItemUI : public UUserWidget
 	GENERATED_BODY()
 	
 public:
-	//¾ÆÀÌÅÛ Á¤º¸ ¼¼ÆÃ[¾ÆÀÌÅÛID, °³¼ö, ¾ÆÀÌÄÜ, Ç¥½ÃÀÌ¸§, ¼³¸í]
+	//ì•„ì´í…œ ì •ë³´ ì„¸íŒ…[ì•„ì´í…œID, ê°œìˆ˜, ì•„ì´ì½˜, í‘œì‹œì´ë¦„, ì„¤ëª…]
 	UFUNCTION(BlueprintCallable) void SetItemInfo(int ItemIDValue, int CountValue, UTexture2D* IconValue, FName& NameValue, FString& DescriptionValue, EItemType ItemTypeValue);
     
-    //ÅøÆÁ Å¬·¡½º
+    //íˆ´íŒ í´ë˜ìŠ¤
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UI") TSubclassOf<UTooltipUI> TooltipClass;
     UTooltipUI* Tooltip;
 
-    //¾ÆÀÌÅÛ ¿É¼Ç Å¬·¡½º
+    //ì•„ì´í…œ ì˜µì…˜ í´ë˜ìŠ¤
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UI") TSubclassOf<UItemOptionUI> ItemOptionUIClass;
     UItemOptionUI* ItemOptionUI;
 
-    //UI Á¦°Å ½Ã ½ÇÇà(ÅøÆÁ »èÁ¦¸¦ À§ÇÔ)
+    //UI ì œê±° ì‹œ ì‹¤í–‰(íˆ´íŒ ì‚­ì œë¥¼ ìœ„í•¨)
     virtual void NativeDestruct() override;
 
 protected:
-    //ÀÌ¹ÌÁö
+    //ì´ë¯¸ì§€
     UPROPERTY(meta = (BindWidget)) UImage* ItemIconImage;
-    //°³¼ö Ç¥½Ã ÅØ½ºÆ® ¹Ú½º
+    //ê°œìˆ˜ í‘œì‹œ í…ìŠ¤íŠ¸ ë°•ìŠ¤
     UPROPERTY(meta = (BindWidget)) UTextBlock* CountText;
-    //¾ÆÀÌÅÛ ÀÌ¸§ ¹Ú½º
+    //ì•„ì´í…œ ì´ë¦„ ë°•ìŠ¤
     UPROPERTY(meta = (BindWidget)) UTextBlock* NameText;
 
-    //¾ÆÀÌÅÛ ÀÌ¸§
+    //ì•„ì´í…œ ì´ë¦„
     UPROPERTY() FName ItemName;
-    //¾ÆÀÌÅÛ ÀÎµ¦½º
+    //ì•„ì´í…œ ì¸ë±ìŠ¤
     UPROPERTY() int ItemID;
-    //¾ÆÀÌÅÛ °³¼ö
+    //ì•„ì´í…œ ê°œìˆ˜
     UPROPERTY() int Count;
-    //¾ÆÀÌÅÛ ¼³¸í
+    //ì•„ì´í…œ ì„¤ëª…
     UPROPERTY() FString Description;
-    //¾ÆÀÌÅÛ Å¸ÀÔ
+    //ì•„ì´í…œ íƒ€ì…
     UPROPERTY() EItemType ItemType;
    
-    //ÅøÆÁ »ı¼º
+    //íˆ´íŒ ìƒì„±
     virtual void NativeOnMouseEnter(const FGeometry& InGeometry, const FPointerEvent& InMouseEvent) override;
-    //ÅøÆÁ Á¦°Å
+    //íˆ´íŒ ì œê±°
     virtual void NativeOnMouseLeave(const FPointerEvent& InMouseEvent) override;
-    //¾ÆÀÌÅÛ ¿É¼Ç »ı¼º
+    //ì•„ì´í…œ ì˜µì…˜ ìƒì„±
     virtual FReply NativeOnMouseButtonDown(const FGeometry& InGeometry, const FPointerEvent& InMouseEvent) override;
 };

@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+Ôªø// Fill out your copyright notice in the Description page of Project Settings.
 
 #pragma once
 
@@ -30,7 +30,7 @@ class FIRST_API UItemOptionUI : public UUserWidget
 	UPROPERTY(meta = (BindWidget)) UButton* RemoveButton;
 
 public:
-	//æ∆¿Ã≈€ ¡§∫∏ »Æ¿Œ
+	//ÏïÑÏù¥ÌÖú Ï†ïÎ≥¥ ÌôïÏù∏
 	UFUNCTION(BlueprintCallable) void CheckItemInfo(int ItemIDValue, int CountValue, EItemType ItemTypeValue);
 	UFUNCTION() void UseButtonClick();
 	UFUNCTION() void Slot1ButtonClick();
@@ -41,6 +41,6 @@ public:
 	UFUNCTION() void ReleaseSlotButtonClick();
 	UFUNCTION() void RemoveButtonClick();
 
-	//UI ¡¶∞≈
+	//UI Ï†úÍ±∞
 	virtual void NativeOnMouseLeave(const FPointerEvent& InMouseEvent) override;
 };

@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 #pragma once
 
@@ -16,12 +16,12 @@ class FIRST_API UMySaveGame : public USaveGame
 	
 public:
     
-    //¸¶½ºÅÍÀ½·®
+    //ë§ˆìŠ¤í„°ìŒëŸ‰
     UPROPERTY(VisibleAnywhere) float MasterVolume = 1.0f;
 
-    //¹è°æÀ½¾Ç
+    //ë°°ê²½ìŒì•…
     UPROPERTY(VisibleAnywhere) float BGMVolume = 1.0f;
 
-    //È¿°úÀ½
+    //íš¨ê³¼ìŒ
     UPROPERTY(VisibleAnywhere) float SFXVolume = 1.0f;
 };

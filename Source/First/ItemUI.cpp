@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 
 #include "ItemUI.h"
@@ -20,7 +20,7 @@ void UItemUI::NativeOnMouseEnter(const FGeometry& InGeometry, const FPointerEven
 {
     Super::NativeOnMouseEnter(InGeometry, InMouseEvent);
 
-    //ÇÃ·¹ÀÌ¾î Á¤º¸ °¡Á®¿À±â
+    //í”Œë ˆì´ì–´ ì •ë³´ ê°€ì ¸ì˜¤ê¸°
     APlayerController* PC = GetOwningPlayer();
     if (!PC) return;
 
@@ -33,7 +33,7 @@ void UItemUI::NativeOnMouseEnter(const FGeometry& InGeometry, const FPointerEven
 
         Tooltip->SetItemData(ItemName, ItemType, Description);
 
-        //¸¶¿ì½º À§Ä¡ Á¤º¸ °¡Á®¿À±â
+        //ë§ˆìš°ìŠ¤ ìœ„ì¹˜ ì •ë³´ ê°€ì ¸ì˜¤ê¸°
         FVector2D MousePos;
         PC->GetMousePosition(MousePos.X, MousePos.Y);
         Tooltip->SetPositionInViewport(MousePos, true);
@@ -71,11 +71,11 @@ void UItemUI::NativeDestruct()
 
 FReply UItemUI::NativeOnMouseButtonDown(const FGeometry& InGeometry, const FPointerEvent& InMouseEvent)
 {
-    //ÇÃ·¹ÀÌ¾î Á¤º¸ °¡Á®¿À±â
+    //í”Œë ˆì´ì–´ ì •ë³´ ê°€ì ¸ì˜¤ê¸°
     APlayerController* PC = GetOwningPlayer();
     if (!PC) return FReply::Unhandled();
 
-    //ÀÌ¹Ì ¾ÆÀÌÅÛ ¿É¼ÇUI°¡ ÀÖÀ¸¸é »èÁ¦
+    //ì´ë¯¸ ì•„ì´í…œ ì˜µì…˜UIê°€ ìžˆìœ¼ë©´ ì‚­ì œ
     if (ItemOptionUI)
     {
         ItemOptionUI->RemoveFromParent();
@@ -92,7 +92,7 @@ FReply UItemUI::NativeOnMouseButtonDown(const FGeometry& InGeometry, const FPoin
             }
             ItemOptionUI->CheckItemInfo(ItemID, Count, ItemType);
 
-            //¸¶¿ì½º À§Ä¡ Á¤º¸ °¡Á®¿À±â
+            //ë§ˆìš°ìŠ¤ ìœ„ì¹˜ ì •ë³´ ê°€ì ¸ì˜¤ê¸°
             FVector2D MousePos;
             PC->GetMousePosition(MousePos.X, MousePos.Y);
             ItemOptionUI->SetPositionInViewport(MousePos, true);

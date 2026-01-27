@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 #pragma once
 
@@ -9,7 +9,7 @@
 #include "Curves/CurveFloat.h"
 #include "WeaponBase.generated.h"
 
-//½ºÅ³¸¦ µ¨¸®°ÔÀÌÆ®¸¦ ÅëÇØ °ü¸®
+//ìŠ¤í‚¬ë¥¼ ë¸ë¦¬ê²Œì´íŠ¸ë¥¼ í†µí•´ ê´€ë¦¬
 DECLARE_DELEGATE(FSkillDelegate);
 
 UCLASS()
@@ -20,31 +20,31 @@ class FIRST_API AWeaponBase : public AActor
 public:	
 	AWeaponBase();
 
-	//¸ğµç ½ºÅ³µéÀ» µ¨¸®°ÔÀÌÆ®¿¡ ÀúÀå
+	//ëª¨ë“  ìŠ¤í‚¬ë“¤ì„ ë¸ë¦¬ê²Œì´íŠ¸ì— ì €ì¥
 	TArray<FSkillDelegate> AllSkills;
 	
-	//Á¤¼ö°ª(0~3)À» ÅëÇØ ½ºÅ³ ½ÇÇà 
+	//ì •ìˆ˜ê°’(0~3)ì„ í†µí•´ ìŠ¤í‚¬ ì‹¤í–‰ 
 	virtual void UseSkill(int Slot);
 
-	//µ¨¸®°ÔÀÌÆ® ¹è¿­¿¡ µî·ÏÇÏ´Â ÇÔ¼ö
+	//ë¸ë¦¬ê²Œì´íŠ¸ ë°°ì—´ì— ë“±ë¡í•˜ëŠ” í•¨ìˆ˜
 	virtual void SetupSkills();
 
 	virtual void Tick(float DeltaTime) override;
 
-	//°ø°İ ÁßÀÎ°¡¸¦ ³ªÅ¸³»´Â º¯¼ö
+	//ê³µê²© ì¤‘ì¸ê°€ë¥¼ ë‚˜íƒ€ë‚´ëŠ” ë³€ìˆ˜
 	bool IsAttacking;
 
-	//Ã¼·Â °è¼ö
+	//ì²´ë ¥ ê³„ìˆ˜
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "WeaponStat")int WSHP;
-	//°ø°İ·Â °è¼ö
+	//ê³µê²©ë ¥ ê³„ìˆ˜
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "WeaponStat")int WSAttackDamage;
-	//°ø°İ¼Óµµ ¹× ÄğÅ¸ÀÓ °è¼ö
+	//ê³µê²©ì†ë„ ë° ì¿¨íƒ€ì„ ê³„ìˆ˜
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "WeaponStat")int WSCooldown;
 
 protected:
 	virtual void BeginPlay() override;
 
-	//·çÆ® ÄÄÆ÷³ÍÆ®
+	//ë£¨íŠ¸ ì»´í¬ë„ŒíŠ¸
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Weapon")USceneComponent* Root;
 
 

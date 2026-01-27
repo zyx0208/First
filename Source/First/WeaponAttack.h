@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 #pragma once
 
@@ -16,7 +16,7 @@ public:
 	AWeaponAttack();
 	virtual void Tick(float DeltaTime) override;
 
-	// »ı¼º ½Ã ÁÖÀÔµÉ °ªµé
+	// ìƒì„± ì‹œ ì£¼ì…ë  ê°’ë“¤
 	int Damage;
 	float Radius;
 	float LifeTime;
@@ -24,10 +24,10 @@ public:
 protected:
 	virtual void BeginPlay() override;
 
-	//ÆÇÁ¤ ±¸
+	//íŒì • êµ¬
 	UPROPERTY(VisibleAnywhere) USphereComponent* AttackCollision;
-	//¿À¹ö·¾ ÀÌº¥Æ®
+	//ì˜¤ë²„ë ™ ì´ë²¤íŠ¸
 	UFUNCTION() void OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
-	//ÀÌ¹Ì ¸ÂÀº ¾×ÅÍ °ü¸®
+	//ì´ë¯¸ ë§ì€ ì•¡í„° ê´€ë¦¬
 	UPROPERTY() TSet<AActor*> AlreadyHit;
 };

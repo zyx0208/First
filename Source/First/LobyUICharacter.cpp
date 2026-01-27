@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 
 #include "LobyUICharacter.h"
@@ -17,13 +17,13 @@ void ALobyUICharacter::BeginPlay()
 {
 	Super::BeginPlay();
 	
-	//ÃÊ±â ¼³Á¤
+	//ì´ˆê¸° ì„¤ì •
 	MoveSpeed = GetCharacterMovement()->MaxWalkSpeed;
 	IsRun = false;
 	IsWalk = false;
 	bUseControllerRotationYaw = false;
 
-	//¸¶¿ì½º º¸ÀÌ°Ô + ¸¶¿ì½º·Î¸¸ ¸Ş´º ¼±ÅÃ
+	//ë§ˆìš°ìŠ¤ ë³´ì´ê²Œ + ë§ˆìš°ìŠ¤ë¡œë§Œ ë©”ë‰´ ì„ íƒ
 	APlayerController* PController = Cast<APlayerController>(GetController());
 	PController->bShowMouseCursor = true;
 	PController->SetInputMode(FInputModeGameOnly());
@@ -34,10 +34,10 @@ void ALobyUICharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	//¿òÁ÷ÀÓ ÆÇ´Ü
+	//ì›€ì§ì„ íŒë‹¨
 	IsWalk = !FMath::IsNearlyZero(GetInputAxisValue("MoveForward")) || !FMath::IsNearlyZero(GetInputAxisValue("MoveRight"));
 
-	//Ä³¸¯ÅÍ ¹æÇâ ¼³Á¤
+	//ìºë¦­í„° ë°©í–¥ ì„¤ì •
 	if (IsWalk)
 	{
 		FVector MoveDirection = FVector(GetInputAxisValue("MoveForward"), GetInputAxisValue("MoveRight"), 0.0f);
@@ -46,7 +46,7 @@ void ALobyUICharacter::Tick(float DeltaTime)
 			MoveDirection.Normalize();
 			FRotator PR = MoveDirection.Rotation();
 
-			// Ä³¸¯ÅÍ È¸Àü Àû¿ë
+			// ìºë¦­í„° íšŒì „ ì ìš©
 			SetActorRotation(PR);
 		}
 	}
@@ -57,21 +57,21 @@ void ALobyUICharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCom
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
-	//ÀÌµ¿
+	//ì´ë™
 	PlayerInputComponent->BindAxis("MoveForward", this, &ALobyUICharacter::MoveForward);
 	PlayerInputComponent->BindAxis("MoveRight", this, &ALobyUICharacter::MoveRight);
 
-	//´Ş¸®±â
+	//ë‹¬ë¦¬ê¸°
 	PlayerInputComponent->BindAction("Run", IE_Pressed, this, &ALobyUICharacter::StartRun);
 	PlayerInputComponent->BindAction("Run", IE_Released, this, &ALobyUICharacter::StopRun);
 
-	//Á¡ÇÁ
+	//ì í”„
 	PlayerInputComponent->BindAction("Jump", IE_Pressed, this, &ALobyUICharacter::Jump);
 }
 
 void ALobyUICharacter::MoveForward(float value)
 {
-	//ÀÌµ¿
+	//ì´ë™
 	if ((Controller) && (value != 0.0f))
 	{
 		AddMovementInput(FVector(1.0f, 0.0f, 0.0f), value);
@@ -80,7 +80,7 @@ void ALobyUICharacter::MoveForward(float value)
 
 void ALobyUICharacter::MoveRight(float value)
 {
-	//ÀÌµ¿
+	//ì´ë™
 	if ((Controller) && (value != 0.0f))
 	{
 		AddMovementInput(FVector(0.0f, 1.0f, 0.0f), value);

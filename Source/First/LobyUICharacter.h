@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 #pragma once
 
@@ -21,24 +21,24 @@ public:
 protected:
 	virtual void BeginPlay() override;
 
-	//ÀÌµ¿ ¼³Á¤
+	//ì´ë™ ì„¤ì •
 	void MoveForward(float value);
 	void MoveRight(float value);
 
-	//ÀÌµ¿¼Óµµ
+	//ì´ë™ì†ë„
 	float MoveSpeed;
 
-	//ÀÌµ¿ ¿©ºÎ
+	//ì´ë™ ì—¬ë¶€
 	UPROPERTY(BlueprintReadOnly) bool IsWalk;
 
-	//´Ş¸®±â
+	//ë‹¬ë¦¬ê¸°
 	void StartRun();
 	void StopRun();
 
-	//´Ş¸®±â ¿©ºÎ
+	//ë‹¬ë¦¬ê¸° ì—¬ë¶€
 	UPROPERTY(BlueprintReadOnly) bool IsRun;
 
-	//Á¡ÇÁÇÔ¼ö
+	//ì í”„í•¨ìˆ˜
 	void StartJump();
 
 };
