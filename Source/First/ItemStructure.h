@@ -30,4 +30,6 @@ public:
     UPROPERTY(EditAnywhere, BlueprintReadOnly) int MaxStack;
     //아이템 설명
     UPROPERTY(EditAnywhere, BlueprintReadOnly) FString Description;
+    //아이템 가치
+    UPROPERTY(EditAnywhere, BlueprintReadOnly) int GoldValue;
 };
