@@ -7,6 +7,7 @@
 #include "IngameUI.h"
 #include "InventoryUI.h"
 #include "InventoryComponent.h"
+#include "NPC.h"
 
 // Sets default values
 AMyCharacter::AMyCharacter()
@@ -49,6 +50,7 @@ void AMyCharacter::BeginPlay()
 	IsSlot4Cooltime = false;
 	IsSlot5Cooltime = false;
 	if (!EXP) EXP = 0;
+	if (!Gold) Gold = 0;
 	ToggleCrosshair();
 
 	//임시 스킬 설정
@@ -170,6 +172,9 @@ void AMyCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompone
 	PlayerInputComponent->BindAction("Slot3", IE_Pressed, this, &AMyCharacter::UseSlot3);
 	PlayerInputComponent->BindAction("Slot4", IE_Pressed, this, &AMyCharacter::UseSlot4);
 	PlayerInputComponent->BindAction("Slot5", IE_Pressed, this, &AMyCharacter::UseSlot5);
+
+	//상호작용
+	PlayerInputComponent->BindAction("Interaction", IE_Pressed, this, &AMyCharacter::Interact);
 }
 
 void AMyCharacter::MoveForward(float value)
@@ -868,4 +873,31 @@ void AMyCharacter::Slot4TimerEnd()
 void AMyCharacter::Slot5TimerEnd()
 {
 	IsSlot5Cooltime = false;
+}
+
+void AMyCharacter::Interact()
+{
+	//타겟 엑터
+	FHitResult Target;
+
+	//캐릭터 기준 바라보는 방향
+	FVector Start = GetActorLocation() + FVector(0, 0, 20.0f);
+	FVector End = Start + GetControlRotation().Vector() * 300.0f;
+
+	//자신 무시
+	FCollisionQueryParams Params;
+	Params.AddIgnoredActor(this);
+
+	//충돌 체크
+	if (GetWorld()->LineTraceSingleByChannel(Target, Start, End, ECC_Visibility, Params))
+	{
+		if (AActor* HitActor = Target.GetActor())
+		{
+			ANPC* NPC = Cast<ANPC>(HitActor);
+			if (NPC)
+			{
+				UE_LOG(LogTemp, Log, TEXT("Find NPC."));
+			}
+		}
+	}
 }

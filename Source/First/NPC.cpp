@@ -2,26 +2,61 @@
 
 
 #include "NPC.h"
+#include "MyCharacter.h"
 
 // Sets default values
 ANPC::ANPC()
 {
- 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
+    InteractionRange = CreateDefaultSubobject<USphereComponent>(TEXT("InteractionRange"));
+    InteractionRange->InitSphereRadius(300.f);
+    InteractionRange->SetCollisionEnabled(ECollisionEnabled::QueryOnly);
+    InteractionRange->SetCollisionResponseToAllChannels(ECollisionResponse::ECR_Ignore);
+    InteractionRange->SetCollisionResponseToChannel(ECC_Pawn, ECollisionResponse::ECR_Overlap);
+
+    RootComponent = InteractionRange;
+
+    InteractionRange->OnComponentBeginOverlap.AddDynamic(this, &ANPC::OnSphereBeginOverlap);
+    InteractionRange->OnComponentEndOverlap.AddDynamic(this, &ANPC::OnSphereEndOverlap);
+
+    InteractUI = CreateDefaultSubobject<UBillboardComponent>(TEXT("InteractUI"));
+    InteractUI->SetupAttachment(RootComponent);
+    InteractUI->SetRelativeLocation(FVector(0.0f, 0.0f, 100.0f));
 }
 
-// Called when the game starts or when spawned
 void ANPC::BeginPlay()
 {
 	Super::BeginPlay();
 	
 }
 
-// Called every frame
 void ANPC::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
 }
 
+void ANPC::OnSphereBeginOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+{
+    if (AMyCharacter* Player = Cast<AMyCharacter>(OtherActor))
+    {
+        if (InteractUI)
+        {
+            InteractUI->SetHiddenInGame(false);
+            UE_LOG(LogTemp, Log, TEXT("Appear Interaction UI"));
+        }
+    }
+}
+
+void ANPC::OnSphereEndOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
+{
+    if (AMyCharacter* Player = Cast<AMyCharacter>(OtherActor))
+    {
+        if (InteractUI)
+        {
+            InteractUI->SetHiddenInGame(true);
+            UE_LOG(LogTemp, Log, TEXT("Disappear Interaction UI"));
+        }
+    }
+}

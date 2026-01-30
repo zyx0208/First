@@ -92,6 +92,8 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly) int EXP;
 	//쿨타임 감소 옵션
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly) int Cooldown;
+	//골드(재화)
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly) int Gold;
 	
 	//디폴트 최대 체력(레벨에 따른 스탯)
 	int DefaultMaxHP;
@@ -182,6 +184,8 @@ public:
 	void Slot5TimerEnd();
 	bool IsSlot5Cooltime;
 	float Slot5Cooltime;
+
+	void Interact();
 
 protected:
 	virtual void BeginPlay() override;

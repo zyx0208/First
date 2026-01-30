@@ -4,6 +4,8 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
+#include "Components/SphereComponent.h"
+#include "Components/BillboardComponent.h"
 #include "NPC.generated.h"
 
 UCLASS()
@@ -12,15 +14,19 @@ class FIRST_API ANPC : public AActor
 	GENERATED_BODY()
 	
 public:	
-	// Sets default values for this actor's properties
 	ANPC();
 
 protected:
-	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
 public:	
-	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
+	//상호작용 범위 구
+	UPROPERTY(VisibleAnywhere) class USphereComponent* InteractionRange;
+	//상호작용 안내 UI
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UI") UBillboardComponent* InteractUI;
+
+	UFUNCTION() void OnSphereBeginOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+	UFUNCTION() void OnSphereEndOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
 };

@@ -32,6 +32,7 @@ public:
 	UPROPERTY(meta = (BindWidget)) UTextBlock* HPText;
 	UPROPERTY(meta = (BindWidget)) UTextBlock* AttackDamageText;
 	UPROPERTY(meta = (BindWidget)) UTextBlock* CooldownText;
+	UPROPERTY(meta = (BindWidget)) UTextBlock* GoldText;
 	UPROPERTY(meta = (BindWidget)) UWrapBox* ItemWrapBox;
 
 	//UPROPERTY(meta = (BindWidget)) UTextBlock* LevelText;

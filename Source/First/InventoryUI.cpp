@@ -28,6 +28,8 @@ void UInventoryUI::NativeConstruct()
 		AttackDamageText->SetText(ADT);
 		FText CDT = FText::FromString(FString::Printf(TEXT("쿨타임감소 : %d%%"), PC->Cooldown));
 		CooldownText->SetText(CDT);
+		FText GT = FText::FromString(FString::Printf(TEXT("%d G"), PC->Gold));
+		GoldText->SetText(GT);
 	}
 
 	InventorySeting();
