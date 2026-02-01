@@ -3,6 +3,7 @@
 
 #include "NPC.h"
 #include "MyCharacter.h"
+#include "SelectShop.h"
 
 // Sets default values
 ANPC::ANPC()
@@ -57,6 +58,13 @@ void ANPC::OnSphereEndOverlap(UPrimitiveComponent* OverlappedComp, AActor* Other
         {
             InteractUI->SetHiddenInGame(true);
             UE_LOG(LogTemp, Log, TEXT("Disappear Interaction UI"));
+        }
+        if ((Player->ShopSelectUI) && (Player->ShopSelectUI->IsInViewport()))
+        {
+            Player->ShopSelectUI->RemoveFromParent();
+            Player->PController->SetShowMouseCursor(false);
+            Player->PController->SetInputMode(FInputModeGameOnly());
+            Player->ShopSelectUI = nullptr;
         }
     }
 }

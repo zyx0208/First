@@ -8,6 +8,7 @@
 #include "InventoryUI.h"
 #include "InventoryComponent.h"
 #include "NPC.h"
+#include "SelectShop.h"
 
 // Sets default values
 AMyCharacter::AMyCharacter()
@@ -34,6 +35,7 @@ void AMyCharacter::BeginPlay()
 	HealHP(MaxHP);
 
 	//초기 설정
+	PController = Cast<APlayerController>(GetController());
 	MoveSpeed = GetCharacterMovement()->MaxWalkSpeed;
 	IsRun = false;
 	IsWalk = false;
@@ -49,6 +51,7 @@ void AMyCharacter::BeginPlay()
 	IsSlot3Cooltime = false;
 	IsSlot4Cooltime = false;
 	IsSlot5Cooltime = false;
+	IsShopSelectUIMode = false;
 	if (!EXP) EXP = 0;
 	if (!Gold) Gold = 0;
 	ToggleCrosshair();
@@ -264,7 +267,6 @@ void AMyCharacter::ToggleOption()
 
 			IsOptionUIMode = false;
 
-			APlayerController* PController = Cast<APlayerController>(GetController());
 			if (PController)
 			{
 				PController->SetPause(false);
@@ -280,7 +282,6 @@ void AMyCharacter::ToggleOption()
 
 			IsOptionUIMode = true;
 
-			APlayerController* PController = Cast<APlayerController>(GetController());
 			if (PController)
 			{
 				PController->SetPause(true);
@@ -318,7 +319,6 @@ void AMyCharacter::ToggleInventory()
 
 			IsInventoryUIMode = false;
 
-			APlayerController* PController = Cast<APlayerController>(GetController());
 			if (PController)
 			{
 				PController->bShowMouseCursor = false;
@@ -343,7 +343,6 @@ void AMyCharacter::ToggleInventory()
 
 			IsInventoryUIMode = true;
 
-			APlayerController* PController = Cast<APlayerController>(GetController());
 			if (PController)
 			{
 				PController->bShowMouseCursor = true;
@@ -379,7 +378,6 @@ void AMyCharacter::ToggleSkill()
 
 			IsSkillUIMode = false;
 
-			APlayerController* PController = Cast<APlayerController>(GetController());
 			if (PController)
 			{
 				PController->bShowMouseCursor = false;
@@ -400,7 +398,6 @@ void AMyCharacter::ToggleSkill()
 
 			IsSkillUIMode = true;
 
-			APlayerController* PController = Cast<APlayerController>(GetController());
 			if (PController)
 			{
 				PController->bShowMouseCursor = true;
@@ -643,7 +640,6 @@ void AMyCharacter::Death()
 
 void AMyCharacter::MouseModeOn()
 {
-	APlayerController* PController = Cast<APlayerController>(GetController());
 	if (PController && !CheckingUI() && !IsOptionUIMode)
 	{
 		//마우스 모드 켜기
@@ -655,7 +651,6 @@ void AMyCharacter::MouseModeOn()
 
 void AMyCharacter::MouseModeOff()
 {
-	APlayerController* PController = Cast<APlayerController>(GetController());
 	if (PController && !CheckingUI() && !IsOptionUIMode)
 	{
 		//마우스 모드 끄기
@@ -666,7 +661,6 @@ void AMyCharacter::MouseModeOff()
 
 void AMyCharacter::SetCenterMouse()
 {
-	APlayerController* PController = Cast<APlayerController>(GetController());
 	int32 X, Y;
 	PController->GetViewportSize(X, Y);
 	PController->SetMouseLocation(X / 2, Y / 2);
@@ -896,7 +890,35 @@ void AMyCharacter::Interact()
 			ANPC* NPC = Cast<ANPC>(HitActor);
 			if (NPC)
 			{
-				UE_LOG(LogTemp, Log, TEXT("Find NPC."));
+				if (ShopSelectUIClass)
+				{
+					if (!ShopSelectUI)
+					{
+						ShopSelectUI = CreateWidget<USelectShop>(GetWorld(), ShopSelectUIClass);
+						ShopSelectUI->Player = this;
+					}
+
+					if (ShopSelectUI->IsInViewport())
+					{
+						ShopSelectUI->RemoveFromParent();
+						PController->SetShowMouseCursor(false);
+						PController->SetInputMode(FInputModeGameOnly());
+						ShopSelectUI = nullptr;
+					}
+					else
+					{
+						//다른 UI 제거
+						if (CheckingUI())
+						{
+							ShutdownAllUI();
+						}
+						ShopSelectUI->AddToViewport();
+						PController->SetShowMouseCursor(true);
+						PController->SetInputMode(FInputModeUIOnly());
+						PController->FlushPressedKeys();
+					}
+				}
+				
 			}
 		}
 	}

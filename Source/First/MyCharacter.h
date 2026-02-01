@@ -10,6 +10,7 @@
 
 class UInventoryUI;
 class UInventoryComponent;
+class USelectShop;
 
 UCLASS()
 class FIRST_API AMyCharacter : public ACharacter
@@ -44,6 +45,9 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly) USceneComponent* WeaponPosition;
 	//인벤토리 컴포넌트
 	UPROPERTY(EditAnywhere, BlueprintReadWrite) UInventoryComponent* CharacterInventory;
+
+	//플레이어 컨트롤러
+	APlayerController* PController;
 
 	//사용 스킬 인덱스 [0 : 1번스킬인덱스값] [1 : 2번스킬인덱스값] [2 : 3번스킬인덱스값] [3 : 4번스킬인덱스값]
 	int SKillIdx[4];
@@ -145,6 +149,12 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UI") TSubclassOf<UIngameUI> IngameUIClass;
 	UIngameUI* IngameUI;
 
+	//상점UI
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UI") TSubclassOf<USelectShop> ShopSelectUIClass;
+	USelectShop* ShopSelectUI;
+	//UI모드를 확인하는 변수
+	bool IsShopSelectUIMode;
+
 	//슬롯 배열(아이템ID를 등록 후 사용)
 	int Slot[5];
 
@@ -186,6 +196,9 @@ public:
 	float Slot5Cooltime;
 
 	void Interact();
+
+	//마우스 위치 중앙 설정
+	void SetCenterMouse();
 
 protected:
 	virtual void BeginPlay() override;
@@ -231,9 +244,6 @@ protected:
 	void MouseModeOn();
 	//마우스모드
 	void MouseModeOff();
-
-	//마우스 위치 중앙 설정
-	void SetCenterMouse();
 
 	//캐릭터 기본 스텟 정리
 	void DefaultStatSeting();
