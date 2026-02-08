@@ -52,6 +52,7 @@ void AMyCharacter::BeginPlay()
 	IsSlot4Cooltime = false;
 	IsSlot5Cooltime = false;
 	IsShopSelectUIMode = false;
+	IsShop = false;
 	if (!EXP) EXP = 0;
 	if (!Gold) Gold = 0;
 	ToggleCrosshair();

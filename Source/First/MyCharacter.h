@@ -155,6 +155,9 @@ public:
 	//UI모드를 확인하는 변수
 	bool IsShopSelectUIMode;
 
+	//상점 상태를 확인하는 변수
+	bool IsShop;
+
 	//슬롯 배열(아이템ID를 등록 후 사용)
 	int Slot[5];
 

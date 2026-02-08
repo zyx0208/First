@@ -8,9 +8,8 @@
 #include "ItemStructure.h"
 #include "ItemOptionUI.generated.h"
 
-/**
- * 
- */
+class UItemUI;
+
 UCLASS()
 class FIRST_API UItemOptionUI : public UUserWidget
 {
@@ -19,6 +18,7 @@ class FIRST_API UItemOptionUI : public UUserWidget
 	void NativeConstruct();
 	int ItemID;
 	int Count;
+	int Gold;
 
 	UPROPERTY(meta = (BindWidget)) UButton* UseButton;
 	UPROPERTY(meta = (BindWidget)) UButton* Slot1Button;
@@ -28,10 +28,14 @@ class FIRST_API UItemOptionUI : public UUserWidget
 	UPROPERTY(meta = (BindWidget)) UButton* Slot5Button;
 	UPROPERTY(meta = (BindWidget)) UButton* ReleaseSlotButton;
 	UPROPERTY(meta = (BindWidget)) UButton* RemoveButton;
+	UPROPERTY(meta = (BindWidget)) UButton* BuyButton;
+	UPROPERTY(meta = (BindWidget)) UButton* SellButton;
 
 public:
+	UItemUI* ItemUI;
+
 	//아이템 정보 확인
-	UFUNCTION(BlueprintCallable) void CheckItemInfo(int ItemIDValue, int CountValue, EItemType ItemTypeValue);
+	UFUNCTION(BlueprintCallable) void CheckItemInfo(int ItemIDValue, int CountValue, EItemType ItemTypeValue, int GoldValue);
 	UFUNCTION() void UseButtonClick();
 	UFUNCTION() void Slot1ButtonClick();
 	UFUNCTION() void Slot2ButtonClick();

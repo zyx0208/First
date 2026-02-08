@@ -3,10 +3,11 @@
 
 #include "TooltipUI.h"
 
-void UTooltipUI::SetItemData(FName& NameValue, EItemType ItemTypeValue, FString& DescriptionValue)
+void UTooltipUI::SetItemData(FName& NameValue, EItemType ItemTypeValue, FString& DescriptionValue, int GoldValue)
 {
 	Name->SetText(FText::FromName(NameValue));
 	Description->SetText(FText::FromString(DescriptionValue));
+	GoldValueText->SetText(FText::FromString(FString::FromInt(GoldValue) + TEXT(" G")));
 
 	//한글화를 위한 스위치문
 	switch (ItemTypeValue)

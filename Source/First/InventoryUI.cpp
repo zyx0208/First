@@ -69,7 +69,8 @@ void UInventoryUI::InventorySeting()
 			FItemStructure* ItemData = InventoryCP->GetItemData(Item.ItemID);
 			if (ItemData)
 			{
-				NewSlot->SetItemInfo(Item.ItemID, Item.Stack, ItemData->ItemIcon, ItemData->ItemName, ItemData->Description, ItemData->ItemType);
+				NewSlot->SetItemInfo(Item.ItemID, Item.Stack, ItemData->ItemIcon, ItemData->ItemName, ItemData->Description, ItemData->ItemType, ItemData->GoldValue);
+				NewSlot->OwnerType = EItemOwnerType::Player;
 				ItemWrapBox->AddChild(NewSlot);
 				UE_LOG(LogTemp, Log, TEXT("ItemUI Add : %d"), Item.ItemID);
 			}

@@ -17,9 +17,10 @@ class FIRST_API UTooltipUI : public UUserWidget
 	GENERATED_BODY()
 
 public:
-	void SetItemData(FName& NameValue, EItemType ItemTypeValue, FString& DescriptionValue);
+	void SetItemData(FName& NameValue, EItemType ItemTypeValue, FString& DescriptionValue, int GoldValue);
 
 	UPROPERTY(meta = (BindWidget)) UTextBlock* Name;
 	UPROPERTY(meta = (BindWidget)) UTextBlock* ItemType;
 	UPROPERTY(meta = (BindWidget)) UTextBlock* Description;
+	UPROPERTY(meta = (BindWidget)) UTextBlock* GoldValueText;
 };

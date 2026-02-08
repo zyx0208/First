@@ -8,20 +8,25 @@
 #include "Components/Image.h"
 #include "TooltipUI.h"
 #include "ItemStructure.h"
-#include "ItemOptionUI.h"
 #include "ItemUI.generated.h"
 
-/**
- * 
- */
+class UItemOptionUI;
+
+UENUM(BlueprintType)
+enum class EItemOwnerType : uint8
+{
+    Player,
+    NPC
+};
+
 UCLASS()
 class FIRST_API UItemUI : public UUserWidget
 {
 	GENERATED_BODY()
 	
 public:
-	//아이템 정보 세팅[아이템ID, 개수, 아이콘, 표시이름, 설명]
-	UFUNCTION(BlueprintCallable) void SetItemInfo(int ItemIDValue, int CountValue, UTexture2D* IconValue, FName& NameValue, FString& DescriptionValue, EItemType ItemTypeValue);
+	//아이템 정보 세팅[아이템ID, 개수, 아이콘, 표시이름, 설명, 골드가치]
+	UFUNCTION(BlueprintCallable) void SetItemInfo(int ItemIDValue, int CountValue, UTexture2D* IconValue, FName& NameValue, FString& DescriptionValue, EItemType ItemTypeValue, int GoldValue);
     
     //툴팁 클래스
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UI") TSubclassOf<UTooltipUI> TooltipClass;
@@ -30,6 +35,9 @@ public:
     //아이템 옵션 클래스
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UI") TSubclassOf<UItemOptionUI> ItemOptionUIClass;
     UItemOptionUI* ItemOptionUI;
+
+    //위젯이 어디에 포함되어 있는지 확인하는 변수
+    UPROPERTY(EditAnywhere, BlueprintReadWrite) EItemOwnerType OwnerType;
 
     //UI 제거 시 실행(툴팁 삭제를 위함)
     virtual void NativeDestruct() override;
@@ -52,6 +60,8 @@ protected:
     UPROPERTY() FString Description;
     //아이템 타입
     UPROPERTY() EItemType ItemType;
+    //아이템 가치
+    UPROPERTY() int Gold;
    
     //툴팁 생성
     virtual void NativeOnMouseEnter(const FGeometry& InGeometry, const FPointerEvent& InMouseEvent) override;

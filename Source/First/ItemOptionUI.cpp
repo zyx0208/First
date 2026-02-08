@@ -3,6 +3,7 @@
 
 #include "ItemOptionUI.h"
 #include "MyCharacter.h"
+#include "ItemUI.h"
 
 void UItemOptionUI::NativeConstruct()
 {
@@ -23,42 +24,80 @@ void UItemOptionUI::NativeOnMouseLeave(const FPointerEvent& InMouseEvent)
 	RemoveFromParent();
 }
 
-void UItemOptionUI::CheckItemInfo(int ItemIDValue, int CountValue, EItemType ItemTypeValue)
+void UItemOptionUI::CheckItemInfo(int ItemIDValue, int CountValue, EItemType ItemTypeValue, int GoldValue)
 {
 	ItemID = ItemIDValue;
 	Count = CountValue;
+	Gold = GoldValue;
 
-	switch (ItemTypeValue)
+	if (APlayerController* PC = GetOwningPlayer())
 	{
-	case EItemType::Equipment:
-		Slot1Button->SetVisibility(ESlateVisibility::Collapsed);
-		Slot2Button->SetVisibility(ESlateVisibility::Collapsed);
-		Slot3Button->SetVisibility(ESlateVisibility::Collapsed);
-		Slot4Button->SetVisibility(ESlateVisibility::Collapsed);
-		Slot5Button->SetVisibility(ESlateVisibility::Collapsed);
-		break;
-	case EItemType::SkillBook:
-		Slot1Button->SetVisibility(ESlateVisibility::Collapsed);
-		Slot2Button->SetVisibility(ESlateVisibility::Collapsed);
-		Slot3Button->SetVisibility(ESlateVisibility::Collapsed);
-		Slot4Button->SetVisibility(ESlateVisibility::Collapsed);
-		Slot5Button->SetVisibility(ESlateVisibility::Collapsed);
-		ReleaseSlotButton->SetVisibility(ESlateVisibility::Collapsed);
-		break;
-	case EItemType::Consumable:
-		UseButton->SetVisibility(ESlateVisibility::Collapsed);
-		break;
-	case EItemType::NonConsumable:
-		UseButton->SetVisibility(ESlateVisibility::Collapsed);
-		Slot1Button->SetVisibility(ESlateVisibility::Collapsed);
-		Slot2Button->SetVisibility(ESlateVisibility::Collapsed);
-		Slot3Button->SetVisibility(ESlateVisibility::Collapsed);
-		Slot4Button->SetVisibility(ESlateVisibility::Collapsed);
-		Slot5Button->SetVisibility(ESlateVisibility::Collapsed);
-		ReleaseSlotButton->SetVisibility(ESlateVisibility::Collapsed);
-		break;
-	default:
-		break;
+		AMyCharacter* Player = Cast<AMyCharacter>(PC->GetPawn());
+		if (Player && Player->IsShop)
+		{
+			UseButton->SetVisibility(ESlateVisibility::Collapsed);
+			Slot1Button->SetVisibility(ESlateVisibility::Collapsed);
+			Slot2Button->SetVisibility(ESlateVisibility::Collapsed);
+			Slot3Button->SetVisibility(ESlateVisibility::Collapsed);
+			Slot4Button->SetVisibility(ESlateVisibility::Collapsed);
+			Slot5Button->SetVisibility(ESlateVisibility::Collapsed);
+			ReleaseSlotButton->SetVisibility(ESlateVisibility::Collapsed);
+			RemoveButton->SetVisibility(ESlateVisibility::Collapsed);
+			if (ItemUI)
+			{
+				if (ItemUI->OwnerType == EItemOwnerType::Player)
+				{
+					BuyButton->SetVisibility(ESlateVisibility::Collapsed);
+				}
+				else if (ItemUI->OwnerType == EItemOwnerType::NPC)
+				{
+					SellButton->SetVisibility(ESlateVisibility::Collapsed);
+				}
+			}
+		}
+		else if (Player && !Player->IsShop)
+		{
+			switch (ItemTypeValue)
+			{
+			case EItemType::Equipment:
+				Slot1Button->SetVisibility(ESlateVisibility::Collapsed);
+				Slot2Button->SetVisibility(ESlateVisibility::Collapsed);
+				Slot3Button->SetVisibility(ESlateVisibility::Collapsed);
+				Slot4Button->SetVisibility(ESlateVisibility::Collapsed);
+				Slot5Button->SetVisibility(ESlateVisibility::Collapsed);
+				BuyButton->SetVisibility(ESlateVisibility::Collapsed);
+				SellButton->SetVisibility(ESlateVisibility::Collapsed);
+				break;
+			case EItemType::SkillBook:
+				Slot1Button->SetVisibility(ESlateVisibility::Collapsed);
+				Slot2Button->SetVisibility(ESlateVisibility::Collapsed);
+				Slot3Button->SetVisibility(ESlateVisibility::Collapsed);
+				Slot4Button->SetVisibility(ESlateVisibility::Collapsed);
+				Slot5Button->SetVisibility(ESlateVisibility::Collapsed);
+				ReleaseSlotButton->SetVisibility(ESlateVisibility::Collapsed);
+				BuyButton->SetVisibility(ESlateVisibility::Collapsed);
+				SellButton->SetVisibility(ESlateVisibility::Collapsed);
+				break;
+			case EItemType::Consumable:
+				UseButton->SetVisibility(ESlateVisibility::Collapsed);
+				BuyButton->SetVisibility(ESlateVisibility::Collapsed);
+				SellButton->SetVisibility(ESlateVisibility::Collapsed);
+				break;
+			case EItemType::NonConsumable:
+				UseButton->SetVisibility(ESlateVisibility::Collapsed);
+				Slot1Button->SetVisibility(ESlateVisibility::Collapsed);
+				Slot2Button->SetVisibility(ESlateVisibility::Collapsed);
+				Slot3Button->SetVisibility(ESlateVisibility::Collapsed);
+				Slot4Button->SetVisibility(ESlateVisibility::Collapsed);
+				Slot5Button->SetVisibility(ESlateVisibility::Collapsed);
+				ReleaseSlotButton->SetVisibility(ESlateVisibility::Collapsed);
+				BuyButton->SetVisibility(ESlateVisibility::Collapsed);
+				SellButton->SetVisibility(ESlateVisibility::Collapsed);
+				break;
+			default:
+				break;
+			}
+		}
 	}
 }
 
